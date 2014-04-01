@@ -6,6 +6,8 @@
 
 package informationretrieval;
 
+import java.io.FileNotFoundException;
+
 /**
  *
  * @author smyrgeorge
@@ -14,10 +16,10 @@ public class Main {
 
     /**
      * @param args the command line arguments
+     * @throws java.io.FileNotFoundException
      */
-    public static void main(String[] args) {
-        System.out.println("sdcfjfjkdhfdkhfdkc");
-        // TODO code application logic here
+    public static void main(String[] args) throws FileNotFoundException {
+        FileIndexer fi = new FileIndexer("files/stopwordsEn.txt","files/stopwordsGr.txt");
     }
     
 }
