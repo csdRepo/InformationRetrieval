@@ -73,8 +73,8 @@ public class FileIndexer {
             this.stopwordsGR[i]=lines.get(i);
     }
     
-    private void initIndex(String path) throws FileNotFoundException, UnsupportedEncodingException, IOException{
-        BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(path), "UTF8"));
+    private void initIndex(String file) throws FileNotFoundException, UnsupportedEncodingException, IOException{
+        BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF8"));
         String str;
         while ((str = in.readLine()) != null){
             StringTokenizer tok = new StringTokenizer(str, " ,.?-_;()![]\":'", true);
