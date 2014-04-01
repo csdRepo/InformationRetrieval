@@ -14,6 +14,7 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 /**
  *
@@ -25,19 +26,22 @@ public class FileIndexer {
     private final String fpGR;
     private String[] stopwordsEN;
     private String[] stopwordsGR;
-    private String[] index;
+    private final ArrayList<String> terms;
     
 
     public FileIndexer(String fp1, String fp2) throws FileNotFoundException, UnsupportedEncodingException, IOException{
         this.stopwordsEN = null;
         this.stopwordsGR = null;
-        this.index = null;
+        this.terms = new ArrayList<>();
         this.fpEN=fp1;
         this.fpGR=fp2;
         
         this.initStopWordsEN();
         this.initStopWordsGR();
         this.initIndex("files/documentCollection/novels/BLUEBELL.txt");
+        
+        
+        this.printTerms();
     }
     
     private void initStopWordsEN() throws FileNotFoundException, UnsupportedEncodingException, IOException{
@@ -71,7 +75,23 @@ public class FileIndexer {
         BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(path), "UTF8"));
         String str;
         while ((str = in.readLine()) != null){
-            System.out.println(str);
+            StringTokenizer tok = new StringTokenizer(str, " ", true);
+            while (tok.hasMoreTokens()){
+                String token = tok.nextToken();
+                if(!" ".equals(token))
+                    this.terms.add(token);
+            }
+        }
+    }
+    
+    private void sortTerms(){
+        
+    }
+    
+    
+    private void printTerms(){
+        for (String term : this.terms) {
+            System.out.println(term);
         }
     }
     
