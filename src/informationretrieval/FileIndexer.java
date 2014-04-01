@@ -74,16 +74,29 @@ public class FileIndexer {
         BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(path), "UTF8"));
         String str;
         while ((str = in.readLine()) != null){
-            StringTokenizer tok = new StringTokenizer(str, " ,.?-_;", true);
+            StringTokenizer tok = new StringTokenizer(str, " ,.?-_;()![]\":'", true);
             while (tok.hasMoreTokens()){
                 String token = tok.nextToken();
                 if(!" ".equals(token))
-                    insertTerm(token);
+                    insertTerm(token.toLowerCase());
             }
         }
     }
     
     private void insertTerm(String term){
+        if(" ,.?-_;()![]\":'".contains(term)){
+            return;
+        }
+        for (String stpwrdEN : this.stopwordsEN) {
+            if(term.equals(stpwrdEN)){
+                return;
+            }
+        }
+        for (String stpwrdGR : this.stopwordsGR) {
+            if(term.equals(stpwrdGR)){
+                return;
+            }
+        }
         for (TermNode tm : this.terms) {
             if(tm.getTerm().equals(term)){
                 tm.setSize();
