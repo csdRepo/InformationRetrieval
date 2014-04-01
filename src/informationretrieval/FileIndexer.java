@@ -6,32 +6,61 @@
 
 package informationretrieval;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
 /**
  *
  * @author smyrgeorge
  */
 public class FileIndexer {
     
-    private final String fp1;
-    private final String fp2;
-    private final String[] stopwordsEN;
-    private final String[] stopwordsGR;
+    int enWords;
+    int grWords;
+    private final String fpEN;
+    private final String fpGR;
+    private String[] stopwordsEN;
+    private String[] stopwordsGR;
     
 
-    public FileIndexer(String fp1, String fp2){
-        this.stopwordsEN = new String[256];
-        this.stopwordsGR = new String[256];
-        this.fp1=fp1;
-        this.fp2=fp2;
+    public FileIndexer(String fp1, String fp2) throws FileNotFoundException{
+        this.stopwordsEN = null;
+        this.stopwordsGR = null;
+        this.enWords=0;
+        this.grWords=0;
+        this.fpEN=fp1;
+        this.fpGR=fp2;
+        
+        this.initStopWordsEN();
+        this.initStopWordsGR();
     }
     
-    private void initStopWordsEN(){
-        
+    private void initStopWordsEN() throws FileNotFoundException{
+        Scanner sc = new Scanner(new File(this.fpEN));
+        List<String> lines = new ArrayList<>();
+        while (sc.hasNextLine()) {
+            lines.add(sc.nextLine());
+        }
+        this.enWords=lines.size();
+        this.stopwordsEN = new String[this.enWords];
+        for(int i=0; i<this.enWords;i++)
+            this.stopwordsEN[i]=lines.get(i);
     }
     
     
-    private void initStopWordsGR(){
-        
+    private void initStopWordsGR() throws FileNotFoundException{
+        Scanner sc = new Scanner(new File(this.fpGR));
+        List<String> lines = new ArrayList<>();
+        while (sc.hasNextLine()) {
+            lines.add(sc.nextLine());
+        }
+        this.grWords=lines.size();
+        this.stopwordsGR = new String[this.grWords];
+        for(int i=0; i<this.grWords;i++)
+            this.stopwordsGR[i]=lines.get(i);
     }
     
 }
