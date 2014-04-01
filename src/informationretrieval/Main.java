@@ -7,6 +7,8 @@
 package informationretrieval;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 /**
  *
@@ -17,8 +19,9 @@ public class Main {
     /**
      * @param args the command line arguments
      * @throws java.io.FileNotFoundException
+     * @throws java.io.UnsupportedEncodingException
      */
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException, IOException {
         FileIndexer fi = new FileIndexer("files/stopwordsEn.txt","files/stopwordsGr.txt");
     }
     
