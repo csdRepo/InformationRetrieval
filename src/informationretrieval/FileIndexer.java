@@ -74,7 +74,7 @@ public class FileIndexer {
         BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(path), "UTF8"));
         String str;
         while ((str = in.readLine()) != null){
-            StringTokenizer tok = new StringTokenizer(str, " ", true);
+            StringTokenizer tok = new StringTokenizer(str, " ,.?-_;", true);
             while (tok.hasMoreTokens()){
                 String token = tok.nextToken();
                 if(!" ".equals(token))
