@@ -6,11 +6,14 @@
 
 package informationretrieval;
 
-import java.io.File;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  *
@@ -18,19 +21,15 @@ import java.util.Scanner;
  */
 public class FileIndexer {
     
-    int enWords;
-    int grWords;
     private final String fpEN;
     private final String fpGR;
     private String[] stopwordsEN;
     private String[] stopwordsGR;
     
 
-    public FileIndexer(String fp1, String fp2) throws FileNotFoundException{
+    public FileIndexer(String fp1, String fp2) throws FileNotFoundException, UnsupportedEncodingException, IOException{
         this.stopwordsEN = null;
         this.stopwordsGR = null;
-        this.enWords=0;
-        this.grWords=0;
         this.fpEN=fp1;
         this.fpGR=fp2;
         
@@ -38,28 +37,30 @@ public class FileIndexer {
         this.initStopWordsGR();
     }
     
-    private void initStopWordsEN() throws FileNotFoundException{
-        Scanner sc = new Scanner(new File(this.fpEN));
+    private void initStopWordsEN() throws FileNotFoundException, UnsupportedEncodingException, IOException{
+        BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(this.fpEN), "UTF8"));
         List<String> lines = new ArrayList<>();
-        while (sc.hasNextLine()) {
-            lines.add(sc.nextLine());
+        String str;
+        while ((str = in.readLine()) != null){
+            lines.add(str);
         }
-        this.enWords=lines.size();
-        this.stopwordsEN = new String[this.enWords];
-        for(int i=0; i<this.enWords;i++)
+        int enWords=lines.size();
+        this.stopwordsEN = new String[enWords];
+        for(int i=0; i<enWords;i++)
             this.stopwordsEN[i]=lines.get(i);
     }
     
     
-    private void initStopWordsGR() throws FileNotFoundException{
-        Scanner sc = new Scanner(new File(this.fpGR));
+    private void initStopWordsGR() throws FileNotFoundException, UnsupportedEncodingException, IOException{
+        BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(this.fpGR), "UTF8"));
         List<String> lines = new ArrayList<>();
-        while (sc.hasNextLine()) {
-            lines.add(sc.nextLine());
+        String str;
+        while ((str = in.readLine()) != null){
+            lines.add(str);
         }
-        this.grWords=lines.size();
-        this.stopwordsGR = new String[this.grWords];
-        for(int i=0; i<this.grWords;i++)
+        int grWords=lines.size();
+        this.stopwordsGR = new String[grWords];
+        for(int i=0; i<grWords;i++)
             this.stopwordsGR[i]=lines.get(i);
     }
     
