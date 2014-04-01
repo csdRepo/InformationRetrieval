@@ -13,6 +13,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -40,6 +42,7 @@ public class FileIndexer {
         this.initStopWordsGR();
         this.initIndex("files/documentCollection/novels/BLUEBELL.txt");
         
+        this.sortTerms();
         
         this.printTerms();
     }
@@ -108,13 +111,21 @@ public class FileIndexer {
     }
     
     private void sortTerms(){
-        
+        Collections.sort(this.terms, new TermNodeComparator());
     }
     
     
     private void printTerms(){
         for (TermNode term : this.terms) {
-            System.out.println(term.getTerm());
+            System.out.println(term.getTerm()+": "+term.getSize());
+        }
+    }
+    
+    
+    private class TermNodeComparator implements Comparator<TermNode> {
+        @Override
+        public int compare(TermNode o1, TermNode o2) {
+            return o1.getTerm().compareTo(o2.getTerm());
         }
     }
     
