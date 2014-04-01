@@ -25,16 +25,19 @@ public class FileIndexer {
     private final String fpGR;
     private String[] stopwordsEN;
     private String[] stopwordsGR;
+    private String[] index;
     
 
     public FileIndexer(String fp1, String fp2) throws FileNotFoundException, UnsupportedEncodingException, IOException{
         this.stopwordsEN = null;
         this.stopwordsGR = null;
+        this.index = null;
         this.fpEN=fp1;
         this.fpGR=fp2;
         
         this.initStopWordsEN();
         this.initStopWordsGR();
+        this.initIndex("files/documentCollection/novels/BLUEBELL.txt");
     }
     
     private void initStopWordsEN() throws FileNotFoundException, UnsupportedEncodingException, IOException{
@@ -62,6 +65,14 @@ public class FileIndexer {
         this.stopwordsGR = new String[grWords];
         for(int i=0; i<grWords;i++)
             this.stopwordsGR[i]=lines.get(i);
+    }
+    
+    private void initIndex(String path) throws FileNotFoundException, UnsupportedEncodingException, IOException{
+        BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(path), "UTF8"));
+        String str;
+        while ((str = in.readLine()) != null){
+            System.out.println(str);
+        }
     }
     
 }
