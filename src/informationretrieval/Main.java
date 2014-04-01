@@ -16,7 +16,7 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        System.out.println("sdcvbcbvbc");
+        System.out.println("sdcc");
         // TODO code application logic here
     }
     
