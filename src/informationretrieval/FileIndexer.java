@@ -26,7 +26,7 @@ public class FileIndexer {
     private final String fpGR;
     private String[] stopwordsEN;
     private String[] stopwordsGR;
-    private final ArrayList<String> terms;
+    private final ArrayList<TermNode> terms;
     
 
     public FileIndexer(String fp1, String fp2) throws FileNotFoundException, UnsupportedEncodingException, IOException{
@@ -41,7 +41,7 @@ public class FileIndexer {
         this.initIndex("files/documentCollection/novels/BLUEBELL.txt");
         
         
-        this.printTerms();
+        //this.printTerms();
     }
     
     private void initStopWordsEN() throws FileNotFoundException, UnsupportedEncodingException, IOException{
@@ -79,9 +79,20 @@ public class FileIndexer {
             while (tok.hasMoreTokens()){
                 String token = tok.nextToken();
                 if(!" ".equals(token))
-                    this.terms.add(token);
+                    insertTerm(token);
             }
         }
+    }
+    
+    private void insertTerm(String term){
+        for (TermNode tm : this.terms) {
+            if(tm.getTerm().equals(term)){
+                tm.setSize();
+                return;
+            }
+        }
+        TermNode trm = new TermNode(term);
+        this.terms.add(trm);
     }
     
     private void sortTerms(){
@@ -89,10 +100,10 @@ public class FileIndexer {
     }
     
     
-    private void printTerms(){
-        for (String term : this.terms) {
-            System.out.println(term);
-        }
-    }
+//    private void printTerms(){
+//        for (String term : this.terms) {
+//            System.out.println(term);
+//        }
+//    }
     
 }
