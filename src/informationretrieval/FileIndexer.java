@@ -118,7 +118,6 @@ public class FileIndexer {
             }
         }
         TermNode trm = new TermNode(term);
-     //   term=Stemmer.Stem(term);
         this.terms.add(trm);
     }
     
