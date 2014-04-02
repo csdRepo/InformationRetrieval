@@ -17,6 +17,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.StringTokenizer;
+import mitos.stemmer.Stemmer;
 
 /**
  *
@@ -37,7 +38,7 @@ public class FileIndexer {
         this.terms = new ArrayList<>();
         this.fpEN=fp1;
         this.fpGR=fp2;
-        
+        Stemmer.Initialize();
         this.initStopWordsEN();
         this.initStopWordsGR();
         this.initIndex("files/documentCollection/novels/BLUEBELL.txt");
@@ -101,12 +102,14 @@ public class FileIndexer {
             }
         }
         for (TermNode tm : this.terms) {
+            term=Stemmer.Stem(term);
             if(tm.getTerm().equals(term)){
                 tm.setSize();
                 return;
             }
         }
         TermNode trm = new TermNode(term);
+     //   term=Stemmer.Stem(term);
         this.terms.add(trm);
     }
     
