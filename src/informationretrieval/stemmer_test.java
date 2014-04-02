@@ -16,7 +16,7 @@ public class stemmer_test {
     
     public void test(){
        Stemmer.Initialize();
-       System.out.println(Stemmer.Stem("writere"));
+   //    System.out.println(Stemmer.Stem("writer"));
     }
     
     

@@ -7,6 +7,7 @@
 package informationretrieval;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -30,8 +31,12 @@ public class FileIndexer {
     private String[] stopwordsEN;
     private String[] stopwordsGR;
     private final ArrayList<TermNode> terms;
+    File folder = new File("files/documentCollection/novels");
+    File[] listOfFiles = folder.listFiles();
+    
     
 
+    
     public FileIndexer(String fp1, String fp2) throws FileNotFoundException, UnsupportedEncodingException, IOException{
         this.stopwordsEN = null;
         this.stopwordsGR = null;
@@ -41,7 +46,16 @@ public class FileIndexer {
         Stemmer.Initialize();
         this.initStopWordsEN();
         this.initStopWordsGR();
-        this.initIndex("files/documentCollection/novels/BLUEBELL.txt");
+        for (File file : listOfFiles) {
+            if (file.isFile() && file.getName().endsWith(".txt")) {
+               
+                System.out.println(file.getCanonicalPath());
+                    this.initIndex(file.getPath());
+                //   file.getAbsolutePath()
+                /* do somthing with content */
+            } 
+        }
+      //  this.initIndex("files/documentCollection/novels/BLUEBELL.txt");
         
         this.sortTerms();
         
