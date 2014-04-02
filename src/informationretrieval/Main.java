@@ -23,6 +23,7 @@ public class Main {
      */
     public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException, IOException {
         FileIndexer fi = new FileIndexer("files/stopwordsEn.txt","files/stopwordsGr.txt");
+        FileWriter fw = new FileWriter(fi);
     }
     
 }

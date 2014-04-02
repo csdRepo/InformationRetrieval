@@ -11,11 +11,11 @@ package informationretrieval;
  * @author smyrgeorge
  */
 public class FileWriter {
-    private final String fldpath;
+    //private final String fldpath;
     private final FileIndexer fi;
     
-    public FileWriter(String fldPath, FileIndexer fi){
-        this.fldpath=fldPath;
+    public FileWriter(FileIndexer fi){
+        //this.fldpath=fldPath;
         this.fi=fi;
     }
 }
