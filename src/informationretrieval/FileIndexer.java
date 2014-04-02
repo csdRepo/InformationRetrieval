@@ -55,6 +55,7 @@ public class FileIndexer {
         
         this.sortTerms();
         this.printTerms();
+        this.printLength();
     }
     
     private void initStopWordsEN() throws FileNotFoundException, UnsupportedEncodingException, IOException{
@@ -87,17 +88,17 @@ public class FileIndexer {
         BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF8"));
         String str;
         while ((str = in.readLine()) != null){
-            StringTokenizer tok = new StringTokenizer(str, " ,.?-_;()![]\":'", true);
+            StringTokenizer tok = new StringTokenizer(str, " ,.?-_;()![]\":'&*~`", true);
             while (tok.hasMoreTokens()){
                 String token = tok.nextToken();
                 if(!" ".equals(token))
-                    insertTerm(token.toLowerCase());
+                    insertTerm(token.toLowerCase(), file);
             }
         }
     }
     
-    private void insertTerm(String term){
-        if(" ,.?-_;()![]\":'".contains(term)){
+    private void insertTerm(String term, String file){
+        if(" ,.?-_;()![]\":'&*~`".contains(term)){
             return;
         }
         for (String stpwrdEN : this.stopwordsEN) {
@@ -113,11 +114,15 @@ public class FileIndexer {
         for (TermNode tm : this.terms) {
             term=Stemmer.Stem(term);
             if(tm.getTerm().equals(term)){
+                if(!file.equals(tm.getLastfile())){
+                    tm.setDf();
+                    tm.setLastfile(file);
+                }
                 tm.setSize();
                 return;
             }
         }
-        TermNode trm = new TermNode(term);
+        TermNode trm = new TermNode(term, file);
         this.terms.add(trm);
     }
     
@@ -128,10 +133,14 @@ public class FileIndexer {
     
     private void printTerms(){
         for (TermNode term : this.terms) {
-            System.out.println(term.getTerm()+": "+term.getSize());
+            System.out.println(term.getTerm()+": "+term.getSize()+" "+term.getDf());
         }
     }
     
+    private void printLength(){
+        System.out.println("\nTotal Words: "+this.terms.size());
+    }
+
     
     private class TermNodeComparator implements Comparator<TermNode> {
         @Override
