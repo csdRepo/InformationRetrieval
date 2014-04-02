@@ -22,8 +22,8 @@ public class Main {
      * @throws java.io.UnsupportedEncodingException
      */
     public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException, IOException {
-        FileIndexer fi = new FileIndexer("files/stopwordsEn.txt","files/stopwordsGr.txt");
-        FileWriter fw = new FileWriter(fi);
+        FlIndexer fi = new FlIndexer("files/stopwordsEn.txt","files/stopwordsGr.txt");
+        FlWriter fw = new FlWriter(fi);
     }
     
 }

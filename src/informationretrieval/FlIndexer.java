@@ -24,20 +24,20 @@ import mitos.stemmer.Stemmer;
  *
  * @author smyrgeorge
  */
-public class FileIndexer {
+public class FlIndexer {
     
     private final String fpEN;
     private final String fpGR;
     private String[] stopwordsEN;
     private String[] stopwordsGR;
-    private final ArrayList<TermNode> terms;
+    public final ArrayList<TermNode> terms;
     File folder = new File("files/documentCollection/novels");
     File[] listOfFiles = folder.listFiles();
     
     
 
     
-    public FileIndexer(String fp1, String fp2) throws FileNotFoundException, UnsupportedEncodingException, IOException{
+    public FlIndexer(String fp1, String fp2) throws FileNotFoundException, UnsupportedEncodingException, IOException{
         this.stopwordsEN = null;
         this.stopwordsGR = null;
         this.terms = new ArrayList<>();
