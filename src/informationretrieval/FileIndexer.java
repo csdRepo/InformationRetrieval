@@ -48,17 +48,12 @@ public class FileIndexer {
         this.initStopWordsGR();
         for (File file : listOfFiles) {
             if (file.isFile() && file.getName().endsWith(".txt")) {
-               
                 System.out.println(file.getCanonicalPath());
-                    this.initIndex(file.getPath());
-                //   file.getAbsolutePath()
-                /* do somthing with content */
+                this.initIndex(file.getPath());
             } 
         }
-      //  this.initIndex("files/documentCollection/novels/BLUEBELL.txt");
         
         this.sortTerms();
-        
         this.printTerms();
     }
     
