@@ -58,8 +58,8 @@ public class FlWriter {
                 if (file.isFile()) {
                     bw.write(i+" "+file.getCanonicalPath()+" ");
                     int dot = file.getAbsolutePath().lastIndexOf('.');
-                    int sep = file.getAbsolutePath().lastIndexOf('/');
-                    bw.write(file.getAbsolutePath().substring(sep + 1, dot)+"\n");
+                    //int sep = file.getAbsolutePath().lastIndexOf('/');
+                    bw.write(file.getAbsolutePath().substring(dot + 1)+"\n");
                     i++;
                     //System.out.println(file.getCanonicalPath());
                 } 

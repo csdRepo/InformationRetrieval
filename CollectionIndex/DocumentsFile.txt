@@ -1,0 +1,10 @@
+0 /home/smyrgeorge/NetBeansProjects/InformationRetrieval/files/documentCollection/novels/THE ENGLISH NOVEL.txt THE ENGLISH NOVEL
+1 /home/smyrgeorge/NetBeansProjects/InformationRetrieval/files/documentCollection/novels/THE MIDNIGHT PASSENGER.txt THE MIDNIGHT PASSENGER
+2 /home/smyrgeorge/NetBeansProjects/InformationRetrieval/files/documentCollection/novels/SLEEPING FIRES.txt SLEEPING FIRES
+3 /home/smyrgeorge/NetBeansProjects/InformationRetrieval/files/documentCollection/novels/RAW GOLD.txt RAW GOLD
+4 /home/smyrgeorge/NetBeansProjects/InformationRetrieval/files/documentCollection/novels/Democracy An American Novel.txt Democracy An American Novel
+5 /home/smyrgeorge/NetBeansProjects/InformationRetrieval/files/documentCollection/novels/BLUEBELL.txt BLUEBELL
+6 /home/smyrgeorge/NetBeansProjects/InformationRetrieval/files/documentCollection/novels/The house behind the cedars.txt The house behind the cedars
+7 /home/smyrgeorge/NetBeansProjects/InformationRetrieval/files/documentCollection/novels/OLIVE.txt OLIVE
+8 /home/smyrgeorge/NetBeansProjects/InformationRetrieval/files/documentCollection/novels/By the Light of the Soul.txt By the Light of the Soul
+9 /home/smyrgeorge/NetBeansProjects/InformationRetrieval/files/documentCollection/novels/The Story of an African Farm.txt The Story of an African Farm
