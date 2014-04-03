@@ -30,8 +30,6 @@ public class FlWriter {
     
     private void writeVocabulary(FlIndexer fi) throws IOException{
         File file = new File("CollectionIndex/VocabularyFile.txt");
- 
-        String content = "This is the content to write into file";
 
 //        if (!file.exists()) {
 //                file.createNewFile();
@@ -43,6 +41,37 @@ public class FlWriter {
                 bw.write(term.getTerm()+" "+term.getDf()+"\n");
             }
         }
+ 
+        System.out.println("Done creating VocabularyFile.txt");
+    }
+    
+    private void writeDocumentsFile(FlIndexer fi) throws IOException{
+        File docfile = new File("CollectionIndex/DocumentsFile.txt");
+        File folder = new File("files/documentCollection/novels");
+        File[] listOfFiles = folder.listFiles();
+
+        FileWriter fw = new FileWriter(docfile.getAbsoluteFile());
+        try (BufferedWriter bw = new BufferedWriter(fw)) {
+            int i=0;
+            for (File file : listOfFiles) {
+                if (file.isFile() && file.getName().endsWith(".txt")) {
+                    bw.write(i+" "+file.getCanonicalPath()+" "+file.getCanonicalPath().substring(0, file.getCanonicalPath().lastIndexOf('.'))+"\n");
+                    //System.out.println(file.getCanonicalPath());
+                } 
+            }
+        }
+        
+//        if (!file.exists()) {
+//                file.createNewFile();
+//        }
+ 
+//	FileWriter fw = new FileWriter(file.getAbsoluteFile());
+//        try (BufferedWriter bw = new BufferedWriter(fw)) {
+//            int i=0;
+//            for (TermNode term : fi.terms) {
+//                bw.write(term.getTerm()+" "+term.getDf()+"\n");
+//            }
+//        }
  
         System.out.println("Done creating VocabularyFile.txt");
     }

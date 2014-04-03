@@ -31,8 +31,8 @@ public class FlIndexer {
     private String[] stopwordsEN;
     private String[] stopwordsGR;
     public final ArrayList<TermNode> terms;
-    File folder = new File("files/documentCollection/novels");
-    File[] listOfFiles = folder.listFiles();
+    private final File folder = new File("files/documentCollection/novels");
+    private final File[] listOfFiles = folder.listFiles();
     
     
 
