@@ -26,6 +26,7 @@ public class FlWriter {
         dir.mkdir();
         
         this.writeVocabulary(fi);
+        this.writeDocumentsFile();
     }
     
     private void writeVocabulary(FlIndexer fi) throws IOException{
@@ -45,7 +46,7 @@ public class FlWriter {
         System.out.println("Done creating VocabularyFile.txt");
     }
     
-    private void writeDocumentsFile(FlIndexer fi) throws IOException{
+    private void writeDocumentsFile() throws IOException{
         File docfile = new File("CollectionIndex/DocumentsFile.txt");
         File folder = new File("files/documentCollection/novels");
         File[] listOfFiles = folder.listFiles();
@@ -60,19 +61,7 @@ public class FlWriter {
                 } 
             }
         }
-        
-//        if (!file.exists()) {
-//                file.createNewFile();
-//        }
- 
-//	FileWriter fw = new FileWriter(file.getAbsoluteFile());
-//        try (BufferedWriter bw = new BufferedWriter(fw)) {
-//            int i=0;
-//            for (TermNode term : fi.terms) {
-//                bw.write(term.getTerm()+" "+term.getDf()+"\n");
-//            }
-//        }
- 
-        System.out.println("Done creating VocabularyFile.txt");
+         
+        System.out.println("Done creating DocumentsFile.txt");
     }
 }
