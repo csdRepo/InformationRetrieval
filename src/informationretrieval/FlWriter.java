@@ -55,8 +55,9 @@ public class FlWriter {
         try (BufferedWriter bw = new BufferedWriter(fw)) {
             int i=0;
             for (File file : listOfFiles) {
-                if (file.isFile() && file.getName().endsWith(".txt")) {
+                if (file.isFile()) {
                     bw.write(i+" "+file.getCanonicalPath()+" "+file.getCanonicalPath().substring(0, file.getCanonicalPath().lastIndexOf('.'))+"\n");
+                    i++;
                     //System.out.println(file.getCanonicalPath());
                 } 
             }
