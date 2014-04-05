@@ -54,7 +54,7 @@ public class FlIndexer {
         }
         
         this.sortTerms();
-        this.printTerms();
+        //this.printTerms();
         this.printLength();
     }
     
@@ -88,7 +88,7 @@ public class FlIndexer {
         BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF8"));
         String str;
         while ((str = in.readLine()) != null){
-            StringTokenizer tok = new StringTokenizer(str, " ,.?-_;()![]\":'&*~`", true);
+            StringTokenizer tok = new StringTokenizer(str, " ,.?-_;()![]\":'&*~`@#$%^�", true);
             while (tok.hasMoreTokens()){
                 String token = tok.nextToken();
                 if(!" ".equals(token))
@@ -98,7 +98,17 @@ public class FlIndexer {
     }
     
     private void insertTerm(String term, String file){
-        if(" ,.?-_;()![]\":'&*~`".contains(term)){
+        try{  
+            int test = Integer.parseInt(term);
+            return;
+        }
+        catch(NumberFormatException nfe){
+            //Do nothing
+        }
+        if(Character.isDigit(term.charAt(0))){
+            return;
+        }
+        if(" ,.?-_;()![]\":'&*~`@#$%^�".contains(term)){
             return;
         }
         for (String stpwrdEN : this.stopwordsEN) {
