@@ -87,11 +87,12 @@ public class FlIndexer {
     private void initIndex(String file) throws FileNotFoundException, UnsupportedEncodingException, IOException{
         BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF8"));
         String str;
+        //int seek=0;
         while ((str = in.readLine()) != null){
             StringTokenizer tok = new StringTokenizer(str, " ,.?-_;()![]\":'&*~`@#$%^�", true);
             while (tok.hasMoreTokens()){
                 String token = tok.nextToken();
-                //int pos = token.
+                //seek=seek+token.length();
                 if(!" ".equals(token))
                     insertTerm(token.toLowerCase(), file);
             }

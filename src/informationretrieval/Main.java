@@ -24,6 +24,7 @@ public class Main {
     public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException, IOException {
         FlIndexer fi = new FlIndexer("files/stopwordsEn.txt","files/stopwordsGr.txt");
         FlWriter fw = new FlWriter(fi);
+        //RAFtest raf = new RAFtest();
     }
     
 }
