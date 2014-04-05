@@ -91,6 +91,7 @@ public class FlIndexer {
             StringTokenizer tok = new StringTokenizer(str, " ,.?-_;()![]\":'&*~`@#$%^�", true);
             while (tok.hasMoreTokens()){
                 String token = tok.nextToken();
+                //int pos = token.
                 if(!" ".equals(token))
                     insertTerm(token.toLowerCase(), file);
             }
