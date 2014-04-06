@@ -127,8 +127,8 @@ public class FlIndexer {
                 return;
             }
         }
+        term=Stemmer.Stem(term);
         for (TermNode tm : this.terms) {
-            //term=Stemmer.Stem(term);
             if(tm.getTerm().equals(term)){
                 if(!file.equals(tm.getLastfile())){
                     tm.setDf();

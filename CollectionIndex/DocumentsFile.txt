@@ -1,10 +1,10 @@
-0 C:\Users\Jmoschon\Documents\NetBeansProjects\InformationRetrieval\files\documentCollection\novels\BLUEBELL.txt txt
-1 C:\Users\Jmoschon\Documents\NetBeansProjects\InformationRetrieval\files\documentCollection\novels\By the Light of the Soul.txt txt
-2 C:\Users\Jmoschon\Documents\NetBeansProjects\InformationRetrieval\files\documentCollection\novels\Democracy An American Novel.txt txt
-3 C:\Users\Jmoschon\Documents\NetBeansProjects\InformationRetrieval\files\documentCollection\novels\OLIVE.txt txt
-4 C:\Users\Jmoschon\Documents\NetBeansProjects\InformationRetrieval\files\documentCollection\novels\RAW GOLD.txt txt
-5 C:\Users\Jmoschon\Documents\NetBeansProjects\InformationRetrieval\files\documentCollection\novels\SLEEPING FIRES.txt txt
-6 C:\Users\Jmoschon\Documents\NetBeansProjects\InformationRetrieval\files\documentCollection\novels\THE ENGLISH NOVEL.txt txt
-7 C:\Users\Jmoschon\Documents\NetBeansProjects\InformationRetrieval\files\documentCollection\novels\The house behind the cedars.txt txt
-8 C:\Users\Jmoschon\Documents\NetBeansProjects\InformationRetrieval\files\documentCollection\novels\THE MIDNIGHT PASSENGER.txt txt
-9 C:\Users\Jmoschon\Documents\NetBeansProjects\InformationRetrieval\files\documentCollection\novels\The Story of an African Farm.txt txt
+0 /home/smyrgeorge/NetBeansProjects/InformationRetrieval/files/documentCollection/novels/THE ENGLISH NOVEL.txt txt
+1 /home/smyrgeorge/NetBeansProjects/InformationRetrieval/files/documentCollection/novels/THE MIDNIGHT PASSENGER.txt txt
+2 /home/smyrgeorge/NetBeansProjects/InformationRetrieval/files/documentCollection/novels/SLEEPING FIRES.txt txt
+3 /home/smyrgeorge/NetBeansProjects/InformationRetrieval/files/documentCollection/novels/RAW GOLD.txt txt
+4 /home/smyrgeorge/NetBeansProjects/InformationRetrieval/files/documentCollection/novels/Democracy An American Novel.txt txt
+5 /home/smyrgeorge/NetBeansProjects/InformationRetrieval/files/documentCollection/novels/BLUEBELL.txt txt
+6 /home/smyrgeorge/NetBeansProjects/InformationRetrieval/files/documentCollection/novels/The house behind the cedars.txt txt
+7 /home/smyrgeorge/NetBeansProjects/InformationRetrieval/files/documentCollection/novels/OLIVE.txt txt
+8 /home/smyrgeorge/NetBeansProjects/InformationRetrieval/files/documentCollection/novels/By the Light of the Soul.txt txt
+9 /home/smyrgeorge/NetBeansProjects/InformationRetrieval/files/documentCollection/novels/The Story of an African Farm.txt txt
