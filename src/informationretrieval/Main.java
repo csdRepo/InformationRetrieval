@@ -27,13 +27,14 @@ public class Main {
         FlWriter fw = new FlWriter(fi);
         
         QueryValuate qv = new QueryValuate();
-        Scanner sc = new Scanner(System.in);
-        String input=sc.next();
-        while(!"exit".equals(input)){
-            qv.query(input);
-            sc = new Scanner(System.in);
-            input=sc.next();
-        }
+        qv.query("aborigin");
+//        Scanner sc = new Scanner(System.in);
+//        String input=sc.next();
+//        while(!"exit".equals(input)){
+//            qv.query(input);
+//            sc = new Scanner(System.in);
+//            input=sc.next();
+//        }
         
         //RAFtest raf = new RAFtest();
     }
