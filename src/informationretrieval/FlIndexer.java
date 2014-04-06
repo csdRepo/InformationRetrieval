@@ -133,6 +133,8 @@ public class FlIndexer {
                 if(!file.equals(tm.getLastfile())){
                     tm.setDf();
                     tm.setLastfile(file);
+                    tm.addPos(file, pos);
+                    return;
                 }
                 tm.addPos(file, pos);
                 tm.setSize();
