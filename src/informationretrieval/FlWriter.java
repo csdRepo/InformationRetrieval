@@ -52,7 +52,7 @@ public class FlWriter {
                     int i=tf.size();
                     for (int j=0; j<i; j++){
                        
-                        token=docmap.get(files.get(j))+" "+tf.get(j)+" "+term.multiMap.get(files.get(j))+"\n";
+                        token=this.docmap.get(files.get(j))+" "+tf.get(j)+" "+term.multiMap.get(files.get(j))+"\n";
                         position= position + token.length();
                         
                         bw_posting.write(token);
