@@ -89,7 +89,7 @@ public class FlIndexer {
         String str;
         int linepos=0;
         while ((str = in.readLine()) != null){
-            StringTokenizer tok = new StringTokenizer(str, " ,.?-_;()![]\":'&*~`@#$%^�", true);
+            StringTokenizer tok = new StringTokenizer(str, " ,.?-_;()![]\":'&*~`@#$%^�=+", true);
             int posInseek = linepos;
             while (tok.hasMoreTokens()){
                 String token = tok.nextToken();
@@ -112,7 +112,7 @@ public class FlIndexer {
         if(Character.isDigit(term.charAt(0))){
             return;
         }
-        if(" ,.?-_;()![]\":'&*~`@#$%^�".contains(term)){
+        if(" ,.?-_;()![]\":'&*~`@#$%^�=+".contains(term)){
             return;
         }
         for (String stpwrdEN : this.stopwordsEN) {

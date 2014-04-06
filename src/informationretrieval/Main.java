@@ -23,18 +23,18 @@ public class Main {
      * @throws java.io.UnsupportedEncodingException
      */
     public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException, IOException {
-        FlIndexer fi = new FlIndexer("files/stopwordsEn.txt","files/stopwordsGr.txt");
-        FlWriter fw = new FlWriter(fi);
+        //FlIndexer fi = new FlIndexer("files/stopwordsEn.txt","files/stopwordsGr.txt");
+        //FlWriter fw = new FlWriter(fi);
         
         QueryValuate qv = new QueryValuate();
-        qv.query("aborigin");
-//        Scanner sc = new Scanner(System.in);
-//        String input=sc.next();
-//        while(!"exit".equals(input)){
-//            qv.query(input);
-//            sc = new Scanner(System.in);
-//            input=sc.next();
-//        }
+        //qv.query("aborigin");
+        Scanner sc = new Scanner(System.in);
+        String input=sc.next();
+        while(!"exit".equals(input)){
+            qv.query(input);
+            sc = new Scanner(System.in);
+            input=sc.next();
+        }
         
         //RAFtest raf = new RAFtest();
     }
