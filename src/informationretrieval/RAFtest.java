@@ -31,14 +31,16 @@ public class RAFtest {
         
         while ((str = in.readLine()) != null){
             StringTokenizer tok = new StringTokenizer(str, " ,.?-_;()![]\":'&*~`@#$%^�", true);
+            int pos=seek;
             while (tok.hasMoreTokens()){
-                raf.seek(seek);
+                raf.seek(pos);
                 String str1=raf.readLine();
                 System.out.println(str1);
                 String token = tok.nextToken();
-                seek=seek+token.length();
+                pos=pos+token.length();
             }
-            //seek=str.length();
+            seek=seek+str.length()+1;
+            //System.out.println(seek);
         }
         
         

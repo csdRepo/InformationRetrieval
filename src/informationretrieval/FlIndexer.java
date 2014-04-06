@@ -54,6 +54,8 @@ public class FlIndexer {
         }
         
         this.sortTerms();
+        //System.out.println(this.terms.get(65).getTerm());
+        //System.out.println(this.terms.get(65).multiMap.get("files/documentCollection/novels/THE ENGLISH NOVEL.txt"));
         //this.printTerms();
         this.printLength();
     }
@@ -87,19 +89,21 @@ public class FlIndexer {
     private void initIndex(String file) throws FileNotFoundException, UnsupportedEncodingException, IOException{
         BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF8"));
         String str;
-        //int seek=0;
+        int linepos=0;
         while ((str = in.readLine()) != null){
             StringTokenizer tok = new StringTokenizer(str, " ,.?-_;()![]\":'&*~`@#$%^�", true);
+            int posInseek = linepos;
             while (tok.hasMoreTokens()){
                 String token = tok.nextToken();
-                //seek=seek+token.length();
+                posInseek=posInseek+token.length();
                 if(!" ".equals(token))
-                    insertTerm(token.toLowerCase(), file);
+                    insertTerm(token.toLowerCase(), file,posInseek);
             }
+            linepos=linepos+str.length()+1;
         }
     }
     
-    private void insertTerm(String term, String file){
+    private void insertTerm(String term, String file, int pos){
         try{  
             int test = Integer.parseInt(term);
             return;
@@ -124,17 +128,18 @@ public class FlIndexer {
             }
         }
         for (TermNode tm : this.terms) {
-            term=Stemmer.Stem(term);
+            //term=Stemmer.Stem(term);
             if(tm.getTerm().equals(term)){
                 if(!file.equals(tm.getLastfile())){
                     tm.setDf();
                     tm.setLastfile(file);
                 }
+                tm.addPos(file, pos);
                 tm.setSize();
                 return;
             }
         }
-        TermNode trm = new TermNode(term, file);
+        TermNode trm = new TermNode(term, file, pos);
         this.terms.add(trm);
     }
     
