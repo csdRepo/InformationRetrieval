@@ -6,10 +6,12 @@
 
 package informationretrieval;
 
+import com.google.common.collect.Multimap;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.LinkedList;
 
 /**
  *
@@ -18,6 +20,8 @@ import java.io.IOException;
 public class FlWriter {
     //private final String fldpath;
     private final FlIndexer fi;
+    
+    
     
     public FlWriter(FlIndexer fi) throws IOException{
         //this.fldpath=fldPath;
@@ -30,17 +34,53 @@ public class FlWriter {
     }
     
     private void writeVocabulary(FlIndexer fi) throws IOException{
+        LinkedList<Integer> tf;
+        LinkedList<String> files;
+        String token = null;
+        int position=0;
         File file = new File("CollectionIndex/VocabularyFile.txt");
+        File Postingfile = new File("CollectionIndex/PostingFile.txt");
+//        if (!file.exists()) {
+//                file.createNewFile();
+//        }
+        
+	FileWriter fw = new FileWriter(file.getAbsoluteFile());
+        FileWriter fw_posting = new FileWriter(Postingfile.getAbsolutePath());
+        try (BufferedWriter bw = new BufferedWriter(fw)) {
+            try (BufferedWriter bw_posting = new BufferedWriter(fw_posting)){
+                for (TermNode term : fi.terms) {
+                    bw.write(term.getTerm()+" "+term.getDf()+" "+position+"\n");
+                 
+                    tf=term.getTfList();
+                    files=term.getFileList();
+                    int i=tf.size();
+                    for (int j=0; j<i; j++){
+                       
+                        token=tf.get(j)+" "+term.multiMap.get(files.get(j))+"\n";
+                        position= position + token.length();
+                        
+                        bw_posting.write(token);
+                  
+                    }
+                  //  bw_posting();
+                
+              
+                }
+            }
+        }
+ 
+        System.out.println("Done creating VocabularyFile.txt");
+    }
+    private void writePosting(File file,TermNode term) throws IOException{
+        
 
 //        if (!file.exists()) {
 //                file.createNewFile();
 //        }
- 
+        
 	FileWriter fw = new FileWriter(file.getAbsoluteFile());
         try (BufferedWriter bw = new BufferedWriter(fw)) {
-            for (TermNode term : fi.terms) {
-                bw.write(term.getTerm()+" "+term.getDf()+"\n");
-            }
+       
         }
  
         System.out.println("Done creating VocabularyFile.txt");
