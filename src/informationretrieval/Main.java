@@ -9,6 +9,7 @@ package informationretrieval;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.Scanner;
 
 /**
  *
@@ -26,7 +27,14 @@ public class Main {
         FlWriter fw = new FlWriter(fi);
         
         QueryValuate qv = new QueryValuate();
-        qv.query("aborigin");
+        Scanner sc = new Scanner(System.in);
+        String input=sc.next();
+        while(!"exit".equals(input)){
+            qv.query(input);
+            sc = new Scanner(System.in);
+            input=sc.next();
+        }
+        
         //RAFtest raf = new RAFtest();
     }
     

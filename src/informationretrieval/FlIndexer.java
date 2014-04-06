@@ -31,7 +31,7 @@ public class FlIndexer {
     private String[] stopwordsEN;
     private String[] stopwordsGR;
     public final ArrayList<TermNode> terms;
-    private final File folder = new File("files/documentCollection/novels");
+    private final File folder = new File("files/documentCollection/all");
     private final File[] listOfFiles = folder.listFiles();
     
     
@@ -95,7 +95,7 @@ public class FlIndexer {
                 String token = tok.nextToken();
                 posInseek=posInseek+token.length();
                 if(!" ".equals(token))
-                    insertTerm(token.toLowerCase(), file,posInseek);
+                    insertTerm(token.toLowerCase(), file,posInseek-token.length());
             }
             linepos=linepos+str.length()+1+1;
         }

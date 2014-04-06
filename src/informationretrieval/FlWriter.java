@@ -69,7 +69,7 @@ public class FlWriter {
     
     private void writeDocumentsFile() throws IOException{
         File docfile = new File("CollectionIndex/DocumentsFile.txt");
-        File folder = new File("files/documentCollection/novels");
+        File folder = new File("files/documentCollection/all");
         File[] listOfFiles = folder.listFiles();
         this.docmap = new HashMap<>();
 
