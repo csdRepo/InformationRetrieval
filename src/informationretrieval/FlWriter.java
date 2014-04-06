@@ -71,20 +71,7 @@ public class FlWriter {
  
         System.out.println("Done creating VocabularyFile.txt");
     }
-    private void writePosting(File file,TermNode term) throws IOException{
-        
 
-//        if (!file.exists()) {
-//                file.createNewFile();
-//        }
-        
-	FileWriter fw = new FileWriter(file.getAbsoluteFile());
-        try (BufferedWriter bw = new BufferedWriter(fw)) {
-       
-        }
- 
-        System.out.println("Done creating VocabularyFile.txt");
-    }
     
     private void writeDocumentsFile() throws IOException{
         File docfile = new File("CollectionIndex/DocumentsFile.txt");
