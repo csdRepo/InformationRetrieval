@@ -32,7 +32,7 @@ public class QueryValuate {
     
     public void query(String word) throws FileNotFoundException, IOException{
         String postLine;
-        String stWord=Stemmer.Stem(word);
+        String stWord=Stemmer.Stem(word).toLowerCase();
         String postFile = "CollectionIndex/PostingFile.txt";
         RandomAccessFile rafPost = new RandomAccessFile(postFile, "r");
 
@@ -69,6 +69,14 @@ public class QueryValuate {
                 System.out.println(docfile);
                 RandomAccessFile doc = new RandomAccessFile(docfile, "r");
                 doc.seek(pos);
+//                while(doc.readChar()!='\n'){
+//                    pos--;
+//                    doc.seek(pos);
+//                }
+//                if(doc.readChar()=='\n'){
+//                    pos++;
+//                    doc.seek(pos);
+//                }
                 System.out.println(doc.readLine());
             }
             

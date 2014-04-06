@@ -32,7 +32,6 @@ public class TermNode {
         this.file=new LinkedList<>();
         this.file.addFirst(file);
         this.tf.addFirst(1);
-        //System.out.println(file);
         this.multiMap.put(file, pos);
     }
     
@@ -47,7 +46,6 @@ public class TermNode {
     
     public void setDf(){
         this.df++;
-       
     }
     
     public void setLastfile(String file){

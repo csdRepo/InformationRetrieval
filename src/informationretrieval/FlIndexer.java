@@ -54,8 +54,6 @@ public class FlIndexer {
         }
         
         this.sortTerms();
-        //System.out.println(this.terms.get(65).getTerm());
-        //System.out.println(this.terms.get(65).multiMap.get("files/documentCollection/novels/THE ENGLISH NOVEL.txt"));
         //this.printTerms();
         this.printLength();
     }
@@ -99,7 +97,7 @@ public class FlIndexer {
                 if(!" ".equals(token))
                     insertTerm(token.toLowerCase(), file,posInseek);
             }
-            linepos=linepos+str.length()+1;
+            linepos=linepos+str.length()+1+1;
         }
     }
     
