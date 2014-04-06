@@ -6,43 +6,39 @@
 
 package informationretrieval;
 
-import com.google.common.collect.Multimap;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 
 /**
  *
  * @author smyrgeorge
  */
 public class FlWriter {
-    //private final String fldpath;
     private final FlIndexer fi;
-    
+    private Map<String, Integer> docmap;
     
     
     public FlWriter(FlIndexer fi) throws IOException{
-        //this.fldpath=fldPath;
         this.fi=fi;
         File dir = new File("CollectionIndex");
         dir.mkdir();
         
-        this.writeVocabulary(fi);
         this.writeDocumentsFile();
+        this.writeVocabulary(fi);
     }
     
     private void writeVocabulary(FlIndexer fi) throws IOException{
         LinkedList<Integer> tf;
         LinkedList<String> files;
-        String token = null;
+        String token;
         int position=0;
         File file = new File("CollectionIndex/VocabularyFile.txt");
         File Postingfile = new File("CollectionIndex/PostingFile.txt");
-//        if (!file.exists()) {
-//                file.createNewFile();
-//        }
         
 	FileWriter fw = new FileWriter(file.getAbsoluteFile());
         FileWriter fw_posting = new FileWriter(Postingfile.getAbsolutePath());
@@ -56,20 +52,18 @@ public class FlWriter {
                     int i=tf.size();
                     for (int j=0; j<i; j++){
                        
-                        token=tf.get(j)+" "+term.multiMap.get(files.get(j))+"\n";
+                        token=docmap.get(files.get(j))+" "+tf.get(j)+" "+term.multiMap.get(files.get(j))+"\n";
                         position= position + token.length();
                         
                         bw_posting.write(token);
                   
                     }
-                  //  bw_posting();
-                
-              
                 }
             }
         }
  
         System.out.println("Done creating VocabularyFile.txt");
+        System.out.println("Done creating PostingFile.txt");
     }
 
     
@@ -77,18 +71,18 @@ public class FlWriter {
         File docfile = new File("CollectionIndex/DocumentsFile.txt");
         File folder = new File("files/documentCollection/novels");
         File[] listOfFiles = folder.listFiles();
+        this.docmap = new HashMap<>();
 
         FileWriter fw = new FileWriter(docfile.getAbsoluteFile());
         try (BufferedWriter bw = new BufferedWriter(fw)) {
             int i=0;
             for (File file : listOfFiles) {
                 if (file.isFile()) {
-                    bw.write(i+" "+file.getCanonicalPath()+" ");
+                    bw.write(i+" "+file.getPath()+" ");
+                    this.docmap.put(file.getPath(), i);
                     int dot = file.getAbsolutePath().lastIndexOf('.');
-                    //int sep = file.getAbsolutePath().lastIndexOf('/');
                     bw.write(file.getAbsolutePath().substring(dot + 1)+"\n");
                     i++;
-                    //System.out.println(file.getCanonicalPath());
                 } 
             }
         }
