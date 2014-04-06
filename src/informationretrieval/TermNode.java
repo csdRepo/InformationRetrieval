@@ -47,6 +47,7 @@ public class TermNode {
     
     public void setDf(){
         this.df++;
+       
     }
     
     public void setLastfile(String file){
@@ -69,5 +70,11 @@ public class TermNode {
     public String getLastfile(){
         return this.file.getFirst();
     }
+    public LinkedList getTfList(){
+        return this.tf;
+    }
     
+    public LinkedList getFileList(){
+        return this.file;
+    }
 }
