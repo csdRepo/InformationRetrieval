@@ -14,12 +14,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
+import java.util.TreeMap;
 import mitos.stemmer.Stemmer;
 
 /**
@@ -32,7 +31,6 @@ public class FlIndexer {
     private final String fpGR;
     private String[] stopwordsEN;
     private String[] stopwordsGR;
-    public final ArrayList<TermNode> terms;
     public Map<String, TermNode> mapTerms;
     private final File folder = new File("files/documentCollection/all");
     private final File[] listOfFiles = folder.listFiles();
@@ -43,8 +41,7 @@ public class FlIndexer {
     public FlIndexer(String fp1, String fp2) throws FileNotFoundException, UnsupportedEncodingException, IOException{
         this.stopwordsEN = null;
         this.stopwordsGR = null;
-        this.mapTerms = new HashMap<>();
-        this.terms = new ArrayList<>();
+        this.mapTerms = new TreeMap<>();
         this.fpEN=fp1;
         this.fpGR=fp2;
         Stemmer.Initialize();
@@ -56,8 +53,6 @@ public class FlIndexer {
                 this.initIndex(file.getPath());
             } 
         }
-        
-        this.sortTerms();
         //this.printTerms();
         this.printLength();
     }
@@ -130,7 +125,8 @@ public class FlIndexer {
             }
         }
         term=Stemmer.Stem(term);
-        for (TermNode tm : this.terms) {
+        if(this.mapTerms.containsKey(term)){
+            TermNode tm = this.mapTerms.get(term);
             if(tm.getTerm().equals(term)){
                 if(!file.equals(tm.getLastfile())){
                     tm.setDf();
@@ -144,22 +140,17 @@ public class FlIndexer {
             }
         }
         TermNode trm = new TermNode(term, file, pos);
-        this.terms.add(trm);
+        this.mapTerms.put(term, trm);
     }
-    
-    private void sortTerms(){
-        Collections.sort(this.terms, new TermNodeComparator());
-    }
-    
-    
+        
     private void printTerms(){
-        for (TermNode term : this.terms) {
-            System.out.println(term.getTerm()+": "+term.getSize()+" "+term.getDf());
+        for (Map.Entry<String, TermNode> entry : this.mapTerms.entrySet()){
+            System.out.println(entry.getKey()+": "+entry.getValue().getSize()+" "+entry.getValue().getDf());
         }
     }
     
     private void printLength(){
-        System.out.println("\nTotal Words: "+this.terms.size());
+        System.out.println("\nTotal Words: "+this.mapTerms.size());
     }
 
     

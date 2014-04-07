@@ -44,15 +44,15 @@ public class FlWriter {
         FileWriter fw_posting = new FileWriter(Postingfile.getAbsolutePath());
         try (BufferedWriter bw = new BufferedWriter(fw)) {
             try (BufferedWriter bw_posting = new BufferedWriter(fw_posting)){
-                for (TermNode term : fi.terms) {
-                    bw.write(term.getTerm()+" "+term.getDf()+" "+position+"\n");
+                for (Map.Entry<String, TermNode> entry : fi.mapTerms.entrySet()){
+                    bw.write(entry.getValue().getTerm()+" "+entry.getValue().getDf()+" "+position+"\n");
                  
-                    tf=term.getTfList();
-                    files=term.getFileList();
+                    tf=entry.getValue().getTfList();
+                    files=entry.getValue().getFileList();
                     int i=tf.size();
                     for (int j=0; j<i; j++){
                        
-                        token=this.docmap.get(files.get(j))+" "+tf.get(j)+" "+term.multiMap.get(files.get(j))+"\n";
+                        token=this.docmap.get(files.get(j))+" "+tf.get(j)+" "+entry.getValue().multiMap.get(files.get(j))+"\n";
                         position= position + token.length();
                         
                         bw_posting.write(token);

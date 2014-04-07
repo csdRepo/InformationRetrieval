@@ -25,8 +25,8 @@ public class Main {
      * @throws java.io.UnsupportedEncodingException
      */
     public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException, IOException {
-        //FlIndexer fi = new FlIndexer("files/stopwordsEn.txt","files/stopwordsGr.txt");
-        //FlWriter fw = new FlWriter(fi);
+        FlIndexer fi = new FlIndexer("files/stopwordsEn.txt","files/stopwordsGr.txt");
+        FlWriter fw = new FlWriter(fi);
         
         QueryValuate qv = new QueryValuate();
         qv.query("aborigin");
