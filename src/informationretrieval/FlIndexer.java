@@ -16,7 +16,9 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.StringTokenizer;
 import mitos.stemmer.Stemmer;
 
@@ -31,6 +33,7 @@ public class FlIndexer {
     private String[] stopwordsEN;
     private String[] stopwordsGR;
     public final ArrayList<TermNode> terms;
+    public Map<String, TermNode> mapTerms;
     private final File folder = new File("files/documentCollection/all");
     private final File[] listOfFiles = folder.listFiles();
     
@@ -40,6 +43,7 @@ public class FlIndexer {
     public FlIndexer(String fp1, String fp2) throws FileNotFoundException, UnsupportedEncodingException, IOException{
         this.stopwordsEN = null;
         this.stopwordsGR = null;
+        this.mapTerms = new HashMap<>();
         this.terms = new ArrayList<>();
         this.fpEN=fp1;
         this.fpGR=fp2;

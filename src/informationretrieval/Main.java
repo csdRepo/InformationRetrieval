@@ -25,19 +25,19 @@ public class Main {
      * @throws java.io.UnsupportedEncodingException
      */
     public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException, IOException {
-        FlIndexer fi = new FlIndexer("files/stopwordsEn.txt","files/stopwordsGr.txt");
-        FlWriter fw = new FlWriter(fi);
+        //FlIndexer fi = new FlIndexer("files/stopwordsEn.txt","files/stopwordsGr.txt");
+        //FlWriter fw = new FlWriter(fi);
         
         QueryValuate qv = new QueryValuate();
-        //qv.query("aborigin");
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in, "UTF8"));
-        System.out.println("Give word: ");
-        String input=br.readLine();
-        while(!"exit".equals(input)){
-            qv.query(input);
-            System.out.println("Give word: ");
-            input=br.readLine();
-        }
+        qv.query("aborigin");
+//        BufferedReader br = new BufferedReader(new InputStreamReader(System.in, "UTF8"));
+//        System.out.println("Give word: ");
+//        String input=br.readLine();
+//        while(!"exit".equals(input)){
+//            qv.query(input);
+//            System.out.println("Give word: ");
+//            input=br.readLine();
+//        }
         
         //RAFtest raf = new RAFtest();
     }
