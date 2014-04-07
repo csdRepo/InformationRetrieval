@@ -30,16 +30,6 @@ public class Main {
         
         QueryValuate qv = new QueryValuate();
         qv.query("aborigin");
-//        BufferedReader br = new BufferedReader(new InputStreamReader(System.in, "UTF8"));
-//        System.out.println("Give word: ");
-//        String input=br.readLine();
-//        while(!"exit".equals(input)){
-//            qv.query(input);
-//            System.out.println("Give word: ");
-//            input=br.readLine();
-//        }
-        
-        //RAFtest raf = new RAFtest();
     }
     
 }

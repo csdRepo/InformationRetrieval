@@ -13,9 +13,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.TreeMap;
@@ -29,8 +27,8 @@ public class FlIndexer {
     
     private final String fpEN;
     private final String fpGR;
-    private String[] stopwordsEN;
-    private String[] stopwordsGR;
+    private HashSet<String> stopwordsEN;
+    private HashSet<String> stopwordsGR;
     public Map<String, TermNode> mapTerms;
     private final File folder = new File("files/documentCollection/all");
     private final File[] listOfFiles = folder.listFiles();
@@ -59,28 +57,20 @@ public class FlIndexer {
     
     private void initStopWordsEN() throws FileNotFoundException, UnsupportedEncodingException, IOException{
         BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(this.fpEN), "UTF8"));
-        List<String> lines = new ArrayList<>();
+        this.stopwordsEN=new HashSet<>();
         String str;
         while ((str = in.readLine()) != null){
-            lines.add(str);
+            this.stopwordsEN.add(str);
         }
-        int enWords=lines.size();
-        this.stopwordsEN = new String[enWords];
-        for(int i=0; i<enWords;i++)
-            this.stopwordsEN[i]=lines.get(i);
     }
     
     private void initStopWordsGR() throws FileNotFoundException, UnsupportedEncodingException, IOException{
         BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(this.fpGR), "UTF8"));
-        List<String> lines = new ArrayList<>();
+        this.stopwordsGR=new HashSet<>();
         String str;
         while ((str = in.readLine()) != null){
-            lines.add(str);
+            this.stopwordsGR.add(str);
         }
-        int grWords=lines.size();
-        this.stopwordsGR = new String[grWords];
-        for(int i=0; i<grWords;i++)
-            this.stopwordsGR[i]=lines.get(i);
     }
     
     private void initIndex(String file) throws FileNotFoundException, UnsupportedEncodingException, IOException{
@@ -101,7 +91,6 @@ public class FlIndexer {
     }
     
     private void insertTerm(String term, String file, int pos){
-        //String word = term;
         try{  
             int test = Integer.parseInt(term);
             return;
@@ -109,22 +98,10 @@ public class FlIndexer {
         catch(NumberFormatException nfe){
             //Do nothing
         }
-        if(Character.isDigit(term.charAt(0))){
-            return;
-        }
-        if(" ,.?-_;()![]\":'&*~`@#$%^�=+".contains(term)){
-            return;
-        }
-        for (String stpwrdEN : this.stopwordsEN) {
-            if(term.equals(stpwrdEN)){
-                return;
-            }
-        }
-        for (String stpwrdGR : this.stopwordsGR) {
-            if(term.equals(stpwrdGR)){
-                return;
-            }
-        }
+        if(Character.isDigit(term.charAt(0)))return;
+        if(" ,.?-_;()![]\":'&*~`@#$%^�=+".contains(term))return;
+        if(this.stopwordsEN.contains(term)) return;
+        if(this.stopwordsGR.contains(term)) return;
         term=Stemmer.Stem(term);
         if(this.mapTerms.containsKey(term)){
             TermNode tm = this.mapTerms.get(term);
@@ -152,14 +129,5 @@ public class FlIndexer {
     
     private void printLength(){
         System.out.println("\nTotal Words: "+this.mapTerms.size());
-    }
-
-    
-    private class TermNodeComparator implements Comparator<TermNode> {
-        @Override
-        public int compare(TermNode o1, TermNode o2) {
-            return o1.getTerm().compareTo(o2.getTerm());
-        }
-    }
-    
+    }    
 }
