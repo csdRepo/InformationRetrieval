@@ -326,7 +326,7 @@ public class GUInterface extends javax.swing.JFrame {
             this.fw = new FlWriter(this.fi, path);
             long elapsedTime = System.currentTimeMillis()-start;
             jTextArea1.append("Done Writing Files to CollectionIndex folder!\n");
-            jTextArea1.append("Took "+elapsedTime/1000F+"s\n");
+            jTextArea1.append("Took "+elapsedTime/1000.0+"s\n");
         }
         catch (UnsupportedEncodingException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
