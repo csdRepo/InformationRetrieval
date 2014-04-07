@@ -23,12 +23,12 @@ public class FlWriter {
     private Map<String, Integer> docmap;
     
     
-    public FlWriter(FlIndexer fi) throws IOException{
+    public FlWriter(FlIndexer fi, String filepath) throws IOException{
         this.fi=fi;
         File dir = new File("CollectionIndex");
         dir.mkdir();
         
-        this.writeDocumentsFile();
+        this.writeDocumentsFile(filepath);
         this.writeVocabulary(fi);
     }
     
@@ -66,9 +66,9 @@ public class FlWriter {
     }
 
     
-    private void writeDocumentsFile() throws IOException{
+    private void writeDocumentsFile(String filespath) throws IOException{
         File docfile = new File("CollectionIndex/DocumentsFile.txt");
-        File folder = new File("files/documentCollection/all");
+        File folder = new File(filespath);
         File[] listOfFiles = folder.listFiles();
         this.docmap = new HashMap<>();
 

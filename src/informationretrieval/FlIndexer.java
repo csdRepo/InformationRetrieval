@@ -30,13 +30,15 @@ public class FlIndexer {
     private HashSet<String> stopwordsEN;
     private HashSet<String> stopwordsGR;
     public Map<String, TermNode> mapTerms;
-    private final File folder = new File("files/documentCollection/all");
-    private final File[] listOfFiles = folder.listFiles();
+    private final File folder;
+    final File[] listOfFiles;
     
     
 
     
-    public FlIndexer(String fp1, String fp2) throws FileNotFoundException, UnsupportedEncodingException, IOException{
+    public FlIndexer(String fp1, String fp2, String path) throws FileNotFoundException, UnsupportedEncodingException, IOException{
+        this.folder= new File(path);
+        this.listOfFiles =folder.listFiles();
         this.stopwordsEN = null;
         this.stopwordsGR = null;
         this.mapTerms = new TreeMap<>();
