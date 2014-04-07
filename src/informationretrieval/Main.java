@@ -6,8 +6,10 @@
 
 package informationretrieval;
 
+import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.Scanner;
 
@@ -28,12 +30,13 @@ public class Main {
         
         QueryValuate qv = new QueryValuate();
         //qv.query("aborigin");
-        Scanner sc = new Scanner(System.in);
-        String input=sc.next();
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in, "UTF8"));
+        System.out.println("Give word: ");
+        String input=br.readLine();
         while(!"exit".equals(input)){
             qv.query(input);
-            sc = new Scanner(System.in);
-            input=sc.next();
+            System.out.println("Give word: ");
+            input=br.readLine();
         }
         
         //RAFtest raf = new RAFtest();
