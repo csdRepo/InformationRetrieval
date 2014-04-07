@@ -9,6 +9,7 @@ package informationretrieval;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import static java.lang.System.currentTimeMillis;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
@@ -318,14 +319,14 @@ public class GUInterface extends javax.swing.JFrame {
        
         try {
             jTextArea1.append("Indexing Documents..\n");
-            long start = System.nanoTime(); 
+            long start = currentTimeMillis();
             this.fi = new FlIndexer(stwGR, stwGR,path);
             jTextArea1.append("Done Indexing Files!\n");
             jTextArea1.append("Writing Files..\n");
             this.fw = new FlWriter(this.fi, path);
-            long elapsedTime = System.nanoTime() - start;
+            long elapsedTime = System.currentTimeMillis()-start;
             jTextArea1.append("Done Writing Files to CollectionIndex folder!\n");
-            jTextArea1.append("Took"+elapsedTime+"\n");
+            jTextArea1.append("Took "+elapsedTime/1000F+"s\n");
         }
         catch (UnsupportedEncodingException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
