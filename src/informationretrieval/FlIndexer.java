@@ -101,6 +101,7 @@ public class FlIndexer {
     }
     
     private void insertTerm(String term, String file, int pos){
+        //String word = term;
         try{  
             int test = Integer.parseInt(term);
             return;

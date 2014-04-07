@@ -56,7 +56,6 @@ public class FlWriter {
                         position= position + token.length();
                         
                         bw_posting.write(token);
-                  
                     }
                 }
             }
