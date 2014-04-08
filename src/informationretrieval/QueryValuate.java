@@ -24,9 +24,11 @@ import mitos.stemmer.Stemmer;
  */
 public class QueryValuate {
     private final Map<String, VocInfo> vocab;
+    private final Map<String, Integer> docmaxTF;
     
     public QueryValuate() throws UnsupportedEncodingException, FileNotFoundException, IOException{
         this.vocab = new HashMap<>();
+        this.docmaxTF = new HashMap<>();
         this.initVocab();
     }
     
@@ -66,17 +68,9 @@ public class QueryValuate {
         while ((docsLine = rafDocs.readLine()) != null){
             if(docID==Integer.parseInt(docsLine.substring(0, docsLine.indexOf(' ')))){
                 String docfile = docsLine.substring(docsLine.indexOf(" ")+1, docsLine.lastIndexOf(" "));
-                System.out.println(docfile);
-                RandomAccessFile doc = new RandomAccessFile(docfile, "r");
+                System.out.println(docfile.substring(0, docfile.lastIndexOf(" ")));
+                RandomAccessFile doc = new RandomAccessFile(docfile.substring(0, docfile.lastIndexOf(" ")), "r");
                 doc.seek(pos);
-//                while(doc.readChar()!='\n'){
-//                    pos--;
-//                    doc.seek(pos);
-//                }
-//                if(doc.readChar()=='\n'){
-//                    pos++;
-//                    doc.seek(pos);
-//                }
                 System.out.println(doc.readLine());
             }
             

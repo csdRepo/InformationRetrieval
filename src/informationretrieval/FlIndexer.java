@@ -53,6 +53,7 @@ public class FlIndexer {
             if (file.isFile() && file.getName().endsWith(".txt")) {
                 System.out.println(file.getCanonicalPath());
                 this.initIndex(file.getPath());
+                //System.out.println(file.getPath());
                 this.maxTF.put(file.getPath(), this.maxintTF);
                 this.maxintTF=0;
             } 
@@ -66,7 +67,7 @@ public class FlIndexer {
         this.stopwordsEN=new HashSet<>();
         String str;
         while ((str = in.readLine()) != null){
-            this.stopwordsEN.add(str);
+            this.stopwordsEN.add(Stemmer.Stem(str));
         }
     }
     
@@ -75,21 +76,22 @@ public class FlIndexer {
         this.stopwordsGR=new HashSet<>();
         String str;
         while ((str = in.readLine()) != null){
-            this.stopwordsGR.add(str);
+            this.stopwordsGR.add(Stemmer.Stem(str));
         }
     }
     
     private void initIndex(String file) throws FileNotFoundException, UnsupportedEncodingException, IOException{
         BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF8"));
+        String delimiter = "\t\n\r\f!@#$%^&*;:'\".,0123456789()_-[]{}<>?|~`+-=/ \'\b«»§΄―—’‘–°· \\� ";
         String str;
         int linepos=0;
         while ((str = in.readLine()) != null){
-            StringTokenizer tok = new StringTokenizer(str, " ,.?-_;()![]\":'&*~`@#$%^�=+", true);
+            StringTokenizer tok = new StringTokenizer(str, delimiter, true);
             int posInseek = linepos;
             while (tok.hasMoreTokens()){
                 String token = tok.nextToken();
                 posInseek=posInseek+token.length();
-                if(!" ".equals(token))
+                if(!delimiter.contains(token))
                     insertTerm(token.toLowerCase(), file,posInseek-token.length());
             }
             linepos=linepos+str.length()+1+1;
@@ -97,18 +99,10 @@ public class FlIndexer {
     }
     
     private void insertTerm(String term, String file, int pos){
-        try{  
-            int test = Integer.parseInt(term);
-            return;
-        }
-        catch(NumberFormatException nfe){
-            //Do nothing
-        }
-        if(Character.isDigit(term.charAt(0)))return;
-        if(" ,.?-_;()![]\":'&*~`@#$%^�=+".contains(term))return;
+        term=Stemmer.Stem(term);
         if(this.stopwordsEN.contains(term)) return;
         if(this.stopwordsGR.contains(term)) return;
-        term=Stemmer.Stem(term);
+
         if(this.mapTerms.containsKey(term)){
             TermNode tm = this.mapTerms.get(term);
             if(!file.equals(tm.getLastfile())){
@@ -127,6 +121,10 @@ public class FlIndexer {
         this.mapTerms.put(term, trm);
     }
         
+    public int getMaxTF(String file){
+        return this.maxTF.get(file);
+    }
+    
     private void printTerms(){
         for (Map.Entry<String, TermNode> entry : this.mapTerms.entrySet()){
             System.out.println(entry.getKey()+": "+entry.getValue().getSize()+" "+entry.getValue().getDf());

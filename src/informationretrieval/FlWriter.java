@@ -6,17 +6,11 @@
 
 package informationretrieval;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Map;
 
@@ -25,22 +19,16 @@ import java.util.Map;
  * @author smyrgeorge
  */
 public class FlWriter {
-    private final String fpEN;
-    private final String fpGR;
-    private HashSet<String> stopwordsEN;
-    private HashSet<String> stopwordsGR;
     private final FlIndexer fi;
     private Map<String, Integer> docmap;
     
     
-    public FlWriter(FlIndexer fi, String filepath) throws IOException{
-        this.fpEN="gfgf";
-        this.fpGR="gfgfgf";
+    public FlWriter(FlIndexer fi, String collectioPath) throws IOException{
         this.fi=fi;
         File dir = new File("CollectionIndex");
         dir.mkdir();
         
-        this.writeDocumentsFile(filepath);
+        this.writeDocumentsFile(collectioPath, fi);
         this.writeVocabulary(fi);
     }
     
@@ -78,9 +66,9 @@ public class FlWriter {
     }
 
     
-    private void writeDocumentsFile(String filespath) throws IOException{
+    private void writeDocumentsFile(String collectionPath, FlIndexer fi) throws IOException{
         File docfile = new File("CollectionIndex/DocumentsFile.txt");
-        File folder = new File(filespath);
+        File folder = new File(collectionPath);
         File[] listOfFiles = folder.listFiles();
         this.docmap = new HashMap<>();
 
@@ -92,30 +80,12 @@ public class FlWriter {
                     bw.write(i+" "+file.getPath()+" ");
                     this.docmap.put(file.getPath(), i);
                     int dot = file.getAbsolutePath().lastIndexOf('.');
-                    bw.write(file.getAbsolutePath().substring(dot + 1)+"\n");
+                    bw.write(file.getAbsolutePath().substring(dot + 1)+" "+fi.getMaxTF(file.getPath())+"\n");
                     i++;
                 } 
             }
         }
          
         System.out.println("Done creating DocumentsFile.txt");
-    }
-    
-    private void initStopWordsEN() throws FileNotFoundException, UnsupportedEncodingException, IOException{
-        BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(this.fpEN), "UTF8"));
-        this.stopwordsEN=new HashSet<>();
-        String str;
-        while ((str = in.readLine()) != null){
-            this.stopwordsEN.add(str);
-        }
-    }
-    
-    private void initStopWordsGR() throws FileNotFoundException, UnsupportedEncodingException, IOException{
-        BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(this.fpGR), "UTF8"));
-        this.stopwordsGR=new HashSet<>();
-        String str;
-        while ((str = in.readLine()) != null){
-            this.stopwordsGR.add(str);
-        }
     }
 }
