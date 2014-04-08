@@ -65,6 +65,10 @@ public class TermNode {
         return this.df;
     }
     
+    public int getLasttf(){
+        return this.tf.getFirst();
+    }
+    
     public String getLastfile(){
         return this.file.getFirst();
     }

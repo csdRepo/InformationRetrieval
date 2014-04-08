@@ -24,7 +24,8 @@ import mitos.stemmer.Stemmer;
  * @author smyrgeorge
  */
 public class FlIndexer {
-    
+    private int maxintTF=0;
+    private final Map<String, Integer> maxTF;
     private final String fpEN;
     private final String fpGR;
     private HashSet<String> stopwordsEN;
@@ -41,6 +42,7 @@ public class FlIndexer {
         this.listOfFiles =folder.listFiles();
         this.stopwordsEN = null;
         this.stopwordsGR = null;
+        this.maxTF = new TreeMap<>();
         this.mapTerms = new TreeMap<>();
         this.fpEN=fp1;
         this.fpGR=fp2;
@@ -51,6 +53,8 @@ public class FlIndexer {
             if (file.isFile() && file.getName().endsWith(".txt")) {
                 System.out.println(file.getCanonicalPath());
                 this.initIndex(file.getPath());
+                this.maxTF.put(file.getPath(), this.maxintTF);
+                this.maxintTF=0;
             } 
         }
         //this.printTerms();
@@ -107,19 +111,19 @@ public class FlIndexer {
         term=Stemmer.Stem(term);
         if(this.mapTerms.containsKey(term)){
             TermNode tm = this.mapTerms.get(term);
-            if(tm.getTerm().equals(term)){
-                if(!file.equals(tm.getLastfile())){
-                    tm.setDf();
-                    tm.setLastfile(file);
-                    tm.addPos(file, pos);
-                    return;
-                }
+            if(!file.equals(tm.getLastfile())){
+                tm.setDf();
+                tm.setLastfile(file);
                 tm.addPos(file, pos);
-                tm.setSize();
                 return;
             }
+            tm.addPos(file, pos);
+            tm.setSize();
+            if(tm.getLasttf()>this.maxintTF) this.maxintTF=tm.getLasttf();
+            return;
         }
         TermNode trm = new TermNode(term, file, pos);
+        if(trm.getLasttf()>this.maxintTF) this.maxintTF=trm.getLasttf();
         this.mapTerms.put(term, trm);
     }
         
