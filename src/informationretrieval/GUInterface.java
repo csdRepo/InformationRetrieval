@@ -392,7 +392,7 @@ public class GUInterface extends javax.swing.JFrame {
         try {
             jTextArea1.append("Indexing Documents..\n");
             long start = currentTimeMillis();
-            this.fi = new FlIndexer(stwGR, stwGR,path);
+            this.fi = new FlIndexer(stwEN, stwGR,path);
             jTextArea1.append("Done Indexing Files!\n");
             jTextArea1.append("Writing Files..\n");
             this.fw = new FlWriter(this.fi, path);
