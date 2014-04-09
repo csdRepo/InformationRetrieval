@@ -26,10 +26,7 @@ import mitos.stemmer.Stemmer;
 public class FlIndexer {
     private int maxintTF=0;
     private final Map<String, Integer> maxTF;
-    private final String fpEN;
-    private final String fpGR;
-    private HashSet<String> stopwordsEN;
-    private HashSet<String> stopwordsGR;
+    private final HashSet<String> stopwords;
     public Map<String, TermNode> mapTerms;
     private final File folder;
     final File[] listOfFiles;
@@ -37,49 +34,28 @@ public class FlIndexer {
     
 
     
-    public FlIndexer(String fp1, String fp2, String path) throws FileNotFoundException, UnsupportedEncodingException, IOException{
+    public FlIndexer(String fpEN, String fpGR, String path) throws FileNotFoundException, UnsupportedEncodingException, IOException{
         this.folder= new File(path);
         this.listOfFiles =folder.listFiles();
-        this.stopwordsEN = null;
-        this.stopwordsGR = null;
+        this.stopwords=new HashSet<>();
         this.maxTF = new TreeMap<>();
         this.mapTerms = new TreeMap<>();
-        this.fpEN=fp1;
-        this.fpGR=fp2;
+        
         Stemmer.Initialize();
-        this.initStopWordsEN();
-        this.initStopWordsGR();
+        this.initStopWordsEN(fpEN);
+        this.initStopWordsGR(fpGR);
+        
         for (File file : listOfFiles) {
             if (file.isFile() && file.getName().endsWith(".txt")) {
                 System.out.println(file.getCanonicalPath());
                 this.initIndex(file.getPath());
-                //System.out.println(file.getPath());
                 this.maxTF.put(file.getPath(), this.maxintTF);
                 this.maxintTF=0;
             } 
         }
-        //this.printTerms();
         this.printLength();
     }
-    
-    private void initStopWordsEN() throws FileNotFoundException, UnsupportedEncodingException, IOException{
-        BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(this.fpEN), "UTF8"));
-        this.stopwordsEN=new HashSet<>();
-        String str;
-        while ((str = in.readLine()) != null){
-            this.stopwordsEN.add(Stemmer.Stem(str));
-        }
-    }
-    
-    private void initStopWordsGR() throws FileNotFoundException, UnsupportedEncodingException, IOException{
-        BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(this.fpGR), "UTF8"));
-        this.stopwordsGR=new HashSet<>();
-        String str;
-        while ((str = in.readLine()) != null){
-            this.stopwordsGR.add(Stemmer.Stem(str));
-        }
-    }
-    
+        
     private void initIndex(String file) throws FileNotFoundException, UnsupportedEncodingException, IOException{
         BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF8"));
         String delimiter = "\t\n\r\f!@#$%^&*;:'\".,0123456789()_-[]{}<>?|~`+-=/ \'\b«»§΄―—’‘–°· \\� ";
@@ -94,14 +70,13 @@ public class FlIndexer {
                 if(!delimiter.contains(token))
                     insertTerm(token.toLowerCase(), file,posInseek-token.length());
             }
-            linepos=linepos+str.length()+1+1;
+            linepos=linepos+str.length()+2;
         }
     }
     
     private void insertTerm(String term, String file, int pos){
         term=Stemmer.Stem(term);
-        if(this.stopwordsEN.contains(term)) return;
-        if(this.stopwordsGR.contains(term)) return;
+        if(this.stopwords.contains(term)) return;
 
         if(this.mapTerms.containsKey(term)){
             TermNode tm = this.mapTerms.get(term);
@@ -120,7 +95,23 @@ public class FlIndexer {
         if(trm.getLasttf()>this.maxintTF) this.maxintTF=trm.getLasttf();
         this.mapTerms.put(term, trm);
     }
-        
+    
+    private void initStopWordsEN(String fpEN) throws FileNotFoundException, UnsupportedEncodingException, IOException{
+        BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(fpEN), "UTF8"));
+        String str;
+        while ((str = in.readLine()) != null){
+            this.stopwords.add(Stemmer.Stem(str));
+        }
+    }
+    
+    private void initStopWordsGR(String fpGR) throws FileNotFoundException, UnsupportedEncodingException, IOException{
+        BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(fpGR), "UTF8"));
+        String str;
+        while ((str = in.readLine()) != null){
+            this.stopwords.add(Stemmer.Stem(str));
+        }
+    }
+    
     public int getMaxTF(String file){
         return this.maxTF.get(file);
     }

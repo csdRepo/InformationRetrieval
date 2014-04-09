@@ -19,12 +19,10 @@ import java.util.Map;
  * @author smyrgeorge
  */
 public class FlWriter {
-    private final FlIndexer fi;
     private Map<String, Integer> docmap;
     
     
     public FlWriter(FlIndexer fi, String collectioPath) throws IOException{
-        this.fi=fi;
         File dir = new File("CollectionIndex");
         dir.mkdir();
         
@@ -51,7 +49,6 @@ public class FlWriter {
                     files=entry.getValue().getFileList();
                     int i=tf.size();
                     for (int j=0; j<i; j++){
-                       
                         token=this.docmap.get(files.get(j))+" "+tf.get(j)+" "+entry.getValue().multiMap.get(files.get(j))+"\n";
                         position= position + token.length();
                         
