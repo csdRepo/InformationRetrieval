@@ -25,8 +25,8 @@ public class Main {
         FlIndexer fi = new FlIndexer("files/stopwordsEn.txt","files/stopwordsGr.txt","files/documentCollection/all");
         FlWriter fw = new FlWriter(fi, "files/documentCollection/all");
         
-        //QueryValuate qv = new QueryValuate();
-        //qv.query("aborigin");
+//        QueryValuate qv = new QueryValuate();
+//        qv.query("aborigin");
     }
     
 }

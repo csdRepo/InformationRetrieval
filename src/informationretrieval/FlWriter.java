@@ -43,7 +43,8 @@ public class FlWriter {
         try (BufferedWriter bw = new BufferedWriter(fw)) {
             try (BufferedWriter bw_posting = new BufferedWriter(fw_posting)){
                 for (Map.Entry<String, TermNode> entry : fi.mapTerms.entrySet()){
-                    bw.write(entry.getValue().getTerm()+" "+entry.getValue().getDf()+" "+position+"\n");
+                    double idf = ((double)this.docmap.size())/entry.getValue().getDf();
+                    bw.write(entry.getValue().getTerm()+" "+Double.toString(idf)+" "+position+"\n");
                  
                     tf=entry.getValue().getTfList();
                     files=entry.getValue().getFileList();

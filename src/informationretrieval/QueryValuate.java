@@ -39,7 +39,7 @@ public class QueryValuate {
         RandomAccessFile rafPost = new RandomAccessFile(postFile, "r");
 
         rafPost.seek(this.vocab.get(stWord).pPost);
-        for(int i=0; i<this.vocab.get(stWord).df;i++){
+        for(int i=0; i<this.vocab.get(stWord).idf;i++){
             postLine = rafPost.readLine();
             System.out.println(postLine);
             this.parsePost(postLine);
@@ -84,15 +84,15 @@ public class QueryValuate {
         
         while ((str = in.readLine()) != null){
             String[] temp = str.split(" ");
-            this.vocab.put(temp[0], new VocInfo(Integer.parseInt(temp[1]), Integer.parseInt(temp[2])));
+            this.vocab.put(temp[0], new VocInfo(Double.parseDouble(temp[1]), Integer.parseInt(temp[2])));
         }
     }
     
     private class VocInfo{
-        private final int df;
+        private final double idf;
         private final int pPost;
-        public VocInfo(int df, int pPost){
-            this.df=df;
+        public VocInfo(double idf, int pPost){
+            this.idf=idf;
             this.pPost=pPost;
         }
     }
