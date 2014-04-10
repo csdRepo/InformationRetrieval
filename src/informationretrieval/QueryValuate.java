@@ -6,6 +6,7 @@
 
 package informationretrieval;
 
+import com.google.common.collect.Sets;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -14,7 +15,9 @@ import java.io.InputStreamReader;
 import java.io.RandomAccessFile;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.StringTokenizer;
 import mitos.stemmer.Stemmer;
 
@@ -25,12 +28,18 @@ import mitos.stemmer.Stemmer;
 public class QueryValuate {
     private final Map<String, VocInfo> vocab;
     private final Map<String, Integer> docmaxTF;
+    private final HashSet<String> stopwords;
     
-    public QueryValuate() throws UnsupportedEncodingException, FileNotFoundException, IOException{
+    public QueryValuate(String fpEN,String fpGR) throws UnsupportedEncodingException, FileNotFoundException, IOException{
         this.vocab = new HashMap<>();
         this.docmaxTF = new HashMap<>();
+        this.stopwords=new HashSet<>();
         this.initVocab();
+        this.initStopWordsEN(fpEN);
+        this.initStopWordsGR(fpGR);
     }
+
+
     
     public void query(String word) throws FileNotFoundException, IOException{
         String postLine;
@@ -84,14 +93,91 @@ public class QueryValuate {
         
         while ((str = in.readLine()) != null){
             String[] temp = str.split(" ");
-            this.vocab.put(temp[0], new VocInfo(Double.parseDouble(temp[1]), Integer.parseInt(temp[2])));
+            this.vocab.put(temp[0], new VocInfo(Integer.parseInt(temp[1]),Double.parseDouble(temp[2]), Integer.parseInt(temp[3])));
         }
     }
     
+    
+    private static double log2(double a, double b ){
+        return Math.log(a) / Math.log(b);
+    }
+    
+    public void QueryPpocessor(String Query){
+        String delimiter = "\t\n\r\f!@#$%^&*;:'\".,0123456789()_-[]{}<>?|~`+-=/ \'\b«»§΄―—’‘–°· \\� ";
+        double idf;
+        int tf;
+        int maxtf = 0;
+        Map<String,Double> queryMap =new HashMap<>();
+        Map<String,Double> queryMapIDF =new HashMap<>();
+
+        StringTokenizer tok = new StringTokenizer(Query, delimiter, true);
+          //int posInseek = linepos;
+        while (tok.hasMoreTokens()){
+          String token = tok.nextToken();
+          token=Stemmer.Stem(token);
+          //posInseek=posInseek+token.length();
+          if(token.length()>1 && !this.stopwords.contains(token)){
+              if(queryMap.containsKey(token)){
+                 tf=(int) (queryMap.get(token)+1);
+                 if (tf>maxtf)maxtf=tf;
+                 queryMap.put(token, (double)tf);
+                 //queryMapIDF.put(token, vocab.get(token).idf);
+
+              }
+              else{
+                  queryMap.put(token, 1.00);
+                  if (1>maxtf)maxtf=1;
+                  //queryMapIDF.put(token, vocab.get(token).idf);
+              }   
+          }
+
+        }
+        for (Map.Entry<String, Double> entry : queryMap.entrySet()){
+            if(vocab.containsKey(entry.getKey())){
+               double tfidf= (((double)entry.getValue())/maxtf)*vocab.get(entry.getKey()).idf;
+               tfidf=log2(tfidf, 2);
+               queryMap.put(entry.getKey(),Math.pow(tfidf, 2));
+               System.out.println(entry.getKey()+" "+entry.getValue());
+            }
+            else{
+              queryMap.put(entry.getKey(), 0.00);
+              System.out.println(entry.getKey()+" "+entry.getValue());
+            }
+        }
+        //System.out.println(co);
+    }
+
+      static double cosine_similarity(Map<String, Double> v1, Map<String, Double> v2) {
+            Set<String> both = Sets.newHashSet(v1.keySet());
+            both.retainAll(v2.keySet());
+            double sclar = 0, norm1 = 0, norm2 = 0;
+            for (String k : both) sclar += v1.get(k) * v2.get(k);
+            for (String k : v1.keySet()) norm1 += v1.get(k) * v1.get(k);
+            for (String k : v2.keySet()) norm2 += v2.get(k) * v2.get(k);
+            return sclar / Math.sqrt(norm1 * norm2);
+    }
+    
+    private void initStopWordsEN(String fpEN) throws FileNotFoundException, UnsupportedEncodingException, IOException{
+        BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(fpEN), "UTF8"));
+        String str;
+        while ((str = in.readLine()) != null){
+            this.stopwords.add(Stemmer.Stem(str));
+        }
+    }
+    
+    private void initStopWordsGR(String fpGR) throws FileNotFoundException, UnsupportedEncodingException, IOException{
+        BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(fpGR), "UTF8"));
+        String str;
+        while ((str = in.readLine()) != null){
+            this.stopwords.add(Stemmer.Stem(str));
+        }
+    }
     private class VocInfo{
+        private final int df;
         private final double idf;
         private final int pPost;
-        public VocInfo(double idf, int pPost){
+        public VocInfo(int df, double idf, int pPost){
+            this.df=df;
             this.idf=idf;
             this.pPost=pPost;
         }

@@ -25,8 +25,10 @@ public class Main {
         FlIndexer fi = new FlIndexer("files/stopwordsEn.txt","files/stopwordsGr.txt","files/documentCollection/all");
         FlWriter fw = new FlWriter(fi, "files/documentCollection/all");
         
-//        QueryValuate qv = new QueryValuate();
+       QueryValuate qv = new QueryValuate("files/stopwordsEn.txt","files/stopwordsGr.txt");
+       qv.QueryPpocessor("malakas arxidi iasonas lufi lufi iasonas peos malakas malakas malakas aborigin");
 //        qv.query("aborigin");
+       
     }
     
 }
