@@ -42,8 +42,8 @@ public class FlIndexer {
         this.mapTerms = new TreeMap<>();
         
         Stemmer.Initialize();
-        this.initStopWordsEN(fpEN);
-        this.initStopWordsGR(fpGR);
+        this.initStopWords(fpEN);
+        this.initStopWords(fpGR);
         
         for (File file : listOfFiles) {
             if (file.isFile()) {
@@ -54,6 +54,7 @@ public class FlIndexer {
             } 
         }
         this.printLength();
+        //this.printTerms();
     }
         
     private void initIndex(String file) throws FileNotFoundException, UnsupportedEncodingException, IOException{
@@ -69,8 +70,6 @@ public class FlIndexer {
                 posInseek=posInseek+token.length();
                 if(token.length()>1)
                     insertTerm(token.toLowerCase(), file, posInseek-token.length());
-                //if(!delimiter.contains(token))
-//                    insertTerm(token.toLowerCase(), file, posInseek-token.length());
             }
             linepos=linepos+str.length()+2;
         }
@@ -99,16 +98,8 @@ public class FlIndexer {
         this.mapTerms.put(term, trm);
     }
     
-    private void initStopWordsEN(String fpEN) throws FileNotFoundException, UnsupportedEncodingException, IOException{
-        BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(fpEN), "UTF8"));
-        String str;
-        while ((str = in.readLine()) != null){
-            this.stopwords.add(Stemmer.Stem(str));
-        }
-    }
-    
-    private void initStopWordsGR(String fpGR) throws FileNotFoundException, UnsupportedEncodingException, IOException{
-        BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(fpGR), "UTF8"));
+    private void initStopWords(String fp) throws FileNotFoundException, UnsupportedEncodingException, IOException{
+        BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(fp), "UTF8"));
         String str;
         while ((str = in.readLine()) != null){
             this.stopwords.add(Stemmer.Stem(str));

@@ -22,12 +22,12 @@ public class Main {
      * @throws java.io.UnsupportedEncodingException
      */
     public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException, IOException {
-        FlIndexer fi = new FlIndexer("files/stopwordsEn.txt","files/stopwordsGr.txt","files/documentCollection/all");
-        FlWriter fw = new FlWriter(fi, "files/documentCollection/all");
+        FlIndexer fi = new FlIndexer("files/stopwordsEn.txt","files/stopwordsGr.txt","files/documentCollection/test");
+        FlWriter fw = new FlWriter(fi, "files/documentCollection/test");
         
        QueryValuate qv = new QueryValuate("files/stopwordsEn.txt","files/stopwordsGr.txt");
-       qv.QueryPpocessor("malakas arxidi iasonas lufi lufi iasonas peos malakas malakas malakas aborigin");
-//        qv.query("aborigin");
+       //qv.QueryPpocessor("malakas arxidi iasonas lufi lufi iasonas peos malakas malakas malakas aborigin");
+        qv.query("aborigin");
        
     }
     

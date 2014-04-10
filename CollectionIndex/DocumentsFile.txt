@@ -1,30 +1,5 @@
-0 files\documentCollection\all\Autumn.txt txt 38.62424167128237 12.582347237150069
-1 files\documentCollection\all\BLUEBELL.txt txt 83.47020829369738 33.54232948952615
-2 files\documentCollection\all\By the Light of the Soul.txt txt 26.7314117055303 4.954829061336952
-3 files\documentCollection\all\COCOA AND CHOCOLATE.txt txt 46.80851497638251 20.621096287356497
-4 files\documentCollection\all\Democracy An American Novel.txt txt 53.318743697142914 21.009178530238444
-5 files\documentCollection\all\Discoverers and Explorers.txt txt 94.77378960888794 25.619069937726277
-6 files\documentCollection\all\Electra.txt txt 44.00569512827793 13.905395906082598
-7 files\documentCollection\all\Erwtokritos.txt txt 50.686021941886416 10.968655453969939
-8 files\documentCollection\all\Interactions within the mammalian DNA methyltransferase family.txt txt 29.75352817455116 33.52428212186664
-9 files\documentCollection\all\Lambda Red-mediated recombinogenic engineering of.txt txt 55.404604863747956 46.51420125846435
-10 files\documentCollection\all\Lysistrata.txt txt 49.14606657655997 11.064717752217293
-11 files\documentCollection\all\Mexico.txt txt 111.81967566646841 15.918546263139403
-12 files\documentCollection\all\Monogramma.txt txt 34.173979740586084 9.431412307240059
-13 files\documentCollection\all\Oidypous Tyrannos.txt txt 67.6672932619633 22.490512326650855
-14 files\documentCollection\all\OLIVE.txt txt 50.68525337278806 13.231071325203935
-15 files\documentCollection\all\OUR DAY.txt txt 88.30652333152733 12.63428656186266
-16 files\documentCollection\all\RAW GOLD.txt txt 133.50199612287363 58.639028533902554
-17 files\documentCollection\all\Screening for sequence-specific.txt txt 50.80768373110167 54.52500477148259
-18 files\documentCollection\all\Seven Against Thebes.txt txt 57.7305301111802 10.875509168348277
-19 files\documentCollection\all\SLEEPING FIRES.txt txt 101.35937517596086 24.244344511474242
-20 files\documentCollection\all\The Daughter of a Magnate.txt txt 66.50289664053338 22.600580327290764
-21 files\documentCollection\all\THE ENGLISH NOVEL.txt txt 196.23959433352576 29.108536897619473
-22 files\documentCollection\all\The house behind the cedars.txt txt 107.3258731076131 46.835897723012025
-23 files\documentCollection\all\The Iliad of Homer.txt txt 151.5853090417551 27.54328548060564
-24 files\documentCollection\all\THE MIDNIGHT PASSENGER.txt txt 103.72476074880682 53.297604104094034
-25 files\documentCollection\all\THE RAVEN.txt txt 51.55674143447784 10.709087251302806
-26 files\documentCollection\all\The Story of an African Farm.txt txt 146.68866287086658 63.77474689689572
-27 files\documentCollection\all\THE WORLD'S BEST POETRY.txt txt 112.22898061573794 9.18092622435961
-28 files\documentCollection\all\Ulysses.txt txt 229.55430097531223 16.655424972939453
-29 files\documentCollection\all\USF2.txt txt 30.263842458903323 35.05472857041396
+0 files/documentCollection/test/d4.txt txt 2.380821783940931 2.3942498733150877
+1 files/documentCollection/test/d1.txt txt 1.0588936890535685 0.646755985262556
+2 files/documentCollection/test/d5.txt txt 3.8547529722733436 3.4804864472845862
+3 files/documentCollection/test/d2.txt txt 1.0588936890535685 0.646755985262556
+4 files/documentCollection/test/d3.txt txt 2.2108967824986188 1.629354860954248
