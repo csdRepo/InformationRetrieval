@@ -67,8 +67,10 @@ public class FlIndexer {
             while (tok.hasMoreTokens()){
                 String token = tok.nextToken();
                 posInseek=posInseek+token.length();
-                if(!delimiter.contains(token))
+                if(token.length()>1)
                     insertTerm(token.toLowerCase(), file, posInseek-token.length());
+                //if(!delimiter.contains(token))
+//                    insertTerm(token.toLowerCase(), file, posInseek-token.length());
             }
             linepos=linepos+str.length()+2;
         }
