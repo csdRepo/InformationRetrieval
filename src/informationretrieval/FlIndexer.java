@@ -29,7 +29,7 @@ public class FlIndexer {
     private final HashSet<String> stopwords;
     public Map<String, TermNode> mapTerms;
     private final File folder;
-    final File[] listOfFiles;
+    private final File[] listOfFiles;
     
     
 
@@ -46,7 +46,7 @@ public class FlIndexer {
         this.initStopWordsGR(fpGR);
         
         for (File file : listOfFiles) {
-            if (file.isFile() && file.getName().endsWith(".txt")) {
+            if (file.isFile()) {
                 System.out.println(file.getCanonicalPath());
                 this.initIndex(file.getPath());
                 this.maxTF.put(file.getPath(), this.maxintTF);
@@ -68,7 +68,7 @@ public class FlIndexer {
                 String token = tok.nextToken();
                 posInseek=posInseek+token.length();
                 if(!delimiter.contains(token))
-                    insertTerm(token.toLowerCase(), file,posInseek-token.length());
+                    insertTerm(token.toLowerCase(), file, posInseek-token.length());
             }
             linepos=linepos+str.length()+2;
         }
@@ -84,6 +84,7 @@ public class FlIndexer {
                 tm.setDf();
                 tm.setLastfile(file);
                 tm.addPos(file, pos);
+                if(tm.getLasttf()>this.maxintTF) this.maxintTF=tm.getLasttf();
                 return;
             }
             tm.addPos(file, pos);

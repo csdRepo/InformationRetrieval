@@ -1,10 +1,30 @@
-0 files/documentCollection/novels/THE ENGLISH NOVEL.txt txt
-1 files/documentCollection/novels/THE MIDNIGHT PASSENGER.txt txt
-2 files/documentCollection/novels/SLEEPING FIRES.txt txt
-3 files/documentCollection/novels/RAW GOLD.txt txt
-4 files/documentCollection/novels/Democracy An American Novel.txt txt
-5 files/documentCollection/novels/BLUEBELL.txt txt
-6 files/documentCollection/novels/The house behind the cedars.txt txt
-7 files/documentCollection/novels/OLIVE.txt txt
-8 files/documentCollection/novels/By the Light of the Soul.txt txt
-9 files/documentCollection/novels/The Story of an African Farm.txt txt
+0 files/documentCollection/all/THE ENGLISH NOVEL.txt txt 269
+1 files/documentCollection/all/Autumn.txt txt 1954
+2 files/documentCollection/all/THE MIDNIGHT PASSENGER.txt txt 555
+3 files/documentCollection/all/Erwtokritos.txt txt 3518
+4 files/documentCollection/all/Electra.txt txt 476
+5 files/documentCollection/all/SLEEPING FIRES.txt txt 245
+6 files/documentCollection/all/COCOA AND CHOCOLATE.txt txt 705
+7 files/documentCollection/all/RAW GOLD.txt txt 229
+8 files/documentCollection/all/Monogramma.txt txt 62
+9 files/documentCollection/all/Lysistrata.txt txt 599
+10 files/documentCollection/all/Democracy An American Novel.txt txt 639
+11 files/documentCollection/all/USF2.txt txt 108
+12 files/documentCollection/all/BLUEBELL.txt txt 729
+13 files/documentCollection/all/The Daughter of a Magnate.txt txt 439
+14 files/documentCollection/all/The Iliad of Homer.txt txt 943
+15 files/documentCollection/all/Oidypous Tyrannos.txt txt 375
+16 files/documentCollection/all/The house behind the cedars.txt txt 352
+17 files/documentCollection/all/THE RAVEN.txt txt 76
+18 files/documentCollection/all/OLIVE.txt txt 1280
+19 files/documentCollection/all/Discoverers and Explorers.txt txt 116
+20 files/documentCollection/all/Mexico.txt txt 866
+21 files/documentCollection/all/Lambda Red-mediated recombinogenic engineering of.txt txt 60
+22 files/documentCollection/all/By the Light of the Soul.txt txt 2630
+23 files/documentCollection/all/Ulysses.txt txt 1006
+24 files/documentCollection/all/The Story of an African Farm.txt txt 297
+25 files/documentCollection/all/Screening for sequence-specific.txt txt 65
+26 files/documentCollection/all/Seven Against Thebes.txt txt 252
+27 files/documentCollection/all/THE WORLD'S BEST POETRY.txt txt 487
+28 files/documentCollection/all/Interactions within the mammalian DNA methyltransferase family.txt txt 93
+29 files/documentCollection/all/OUR DAY.txt txt 613
