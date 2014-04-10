@@ -82,7 +82,6 @@ public class FlWriter {
                 } 
             }
         }
-         
         System.out.println("Done creating DocumentsFile.txt");
     }
 }
