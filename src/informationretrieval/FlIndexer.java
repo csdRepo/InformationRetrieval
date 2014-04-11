@@ -53,9 +53,9 @@ public class FlIndexer {
                 System.out.println(file.getCanonicalPath());
                 this.initIndex(file.getPath());
                 this.maxTF.put(file.getPath(), this.maxintTF);
-                this.lengthDoc.put(file.getPath(),this.docWords);
+                this.lengthDoc.put(file.getPath(),this.docWords); //okapi
                 this.maxintTF=0;
-                this.docWords=0;
+                this.docWords=0; //okapi
             } 
         }
         this.printLength();

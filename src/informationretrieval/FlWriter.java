@@ -20,7 +20,7 @@ import java.util.Map;
  */
 public class FlWriter {
     private Map<String, Integer> docMap;
-    private Map<String, Double> docNorm;
+    //private Map<String, Double> docNorm;
     private Map<String, Double> docNormPow;
     
     
@@ -34,7 +34,7 @@ public class FlWriter {
     }
     
     private void writeVocabPost(FlIndexer fi) throws IOException{
-        this.docNorm = new HashMap<>();
+        //this.docNorm = new HashMap<>();
         this.docNormPow = new HashMap<>();
         
         LinkedList<Integer> tf;
@@ -50,7 +50,7 @@ public class FlWriter {
             try (BufferedWriter bw_posting = new BufferedWriter(fw_posting)){
                 for (Map.Entry<String, TermNode> entry : fi.mapTerms.entrySet()){
                     double idf = ((double)this.docMap.size())/entry.getValue().getDf();
-                    idf=log2(idf, 2);
+                    //idf=log2(idf, 2);
                     bw.write(entry.getValue().getTerm()+" "+entry.getValue().getDf()+" "+idf+" "+position+"\n");
                  
                     tf=entry.getValue().getTfList();
@@ -61,17 +61,17 @@ public class FlWriter {
                         double tfidfpow=Math.pow(tfidf, 2);
 
                         
-                        if(this.docNorm.containsKey(files.get(j))){
-                            this.docNorm.put(files.get(j), this.docNorm.get(files.get(j))+tfidf);
+                        if(this.docNormPow.containsKey(files.get(j))){
+                            //this.docNorm.put(files.get(j), this.docNorm.get(files.get(j))+tfidf);
                             this.docNormPow.put(files.get(j), this.docNormPow.get(files.get(j))+tfidfpow);
                         }
                         else{
-                            this.docNorm.put(files.get(j), tfidf);
+                            //this.docNorm.put(files.get(j), tfidf);
                             this.docNormPow.put(files.get(j), tfidfpow);
                         }
                         
                         token=this.docMap.get(files.get(j))+" "+tf.get(j)+" "
-                                +entry.getValue().multiMap.get(files.get(j))+"\n";
+                                +entry.getValue().multiMap.get(files.get(j))+" "+tfidf+"\n";
                         position= position + token.length();
                         
                         bw_posting.write(token);
@@ -113,8 +113,8 @@ public class FlWriter {
                     bw.write(i+" "+file.getPath()+" ");
                     int dot = file.getAbsolutePath().lastIndexOf('.');
                     bw.write(file.getAbsolutePath().substring(dot + 1)+"_"+
-                            Double.toString(this.docNorm.get(file.getPath()))+
-                            " "+this.docNormPow.get(file.getPath())+
+                            //Double.toString(this.docNorm.get(file.getPath()))+
+                            this.docNormPow.get(file.getPath())+
                             "*"+fi.lengthDoc.get(file.getPath())+"\n");
                     i++;
                 } 

@@ -26,10 +26,9 @@ public class Main {
         FlWriter fw = new FlWriter(fi, "files/documentCollection/test");
         
        QueryValuate qv = new QueryValuate("files/stopwordsEn.txt","files/stopwordsGr.txt");
-       qv.queryOKAPI("plays piano");
-       //qv.queryProcessor("plays piano");
-       //qv.query("aborigin");
        //qv.queryOKAPI("plays piano");
+       qv.queryVS("plays piano piano");
+
        
     }
 }

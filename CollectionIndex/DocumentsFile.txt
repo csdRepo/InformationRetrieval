@@ -1,5 +1,5 @@
-0 files/documentCollection/test/d4.txt txt_2.380821783940931 2.3942498733150877*3
-1 files/documentCollection/test/d1.txt txt_1.0588936890535685 0.646755985262556*2
-2 files/documentCollection/test/d5.txt txt_3.8547529722733436 3.4804864472845862*5
-3 files/documentCollection/test/d2.txt txt_1.0588936890535685 0.646755985262556*2
-4 files/documentCollection/test/d3.txt txt_2.2108967824986188 1.629354860954248*3
+0 files/documentCollection/test/d4.txt txt_10.590277777777779*3
+1 files/documentCollection/test/d1.txt txt_4.340277777777779*2
+2 files/documentCollection/test/d5.txt txt_16.145833333333336*5
+3 files/documentCollection/test/d2.txt txt_4.340277777777779*2
+4 files/documentCollection/test/d3.txt txt_8.333333333333334*3
