@@ -50,8 +50,9 @@ public class QueryValuate {
             if(sim.containsKey(simDqi)) simDqi = simDqi+0.00000000001;
             sim.put(simDqi, entry.getKey());
         }
+        System.out.println("OKAPI:");
         for(Map.Entry<Double,Integer> entry : sim.entrySet()){
-            System.out.println(entry.getKey()+" "+entry.getValue());
+            System.out.println(entry.getValue()+" "+entry.getKey());
         }
     }
     
@@ -105,12 +106,23 @@ public class QueryValuate {
     
     public void queryVS(String query) throws FileNotFoundException, IOException {
         Map<String,Double> wiq = this.wiq(query);
-        Map<Integer, Double> sumWQ = sumWQ(wiq);
+        double sumWIQpow=0;
+        Map<Integer, Double> sumWQ = this.sumWQ(wiq);
         Map<Double, Integer> sim = new TreeMap<>();
-        
-        for (Map.Entry<Integer, DocInfo> entry : this.docmap.entrySet()){
-            //double simDq=processVS(query, entry.getValue(), entry.getKey());
+             
+        for(Map.Entry<String, Double> entry : wiq.entrySet()){
+            sumWIQpow=sumWIQpow+entry.getValue()*entry.getValue();
         }
+        
+        for(Map.Entry<Integer, Double> entry : sumWQ.entrySet()){
+            double tmsim = entry.getValue()/(Math.sqrt(this.docmap.get(entry.getKey()).norm*sumWIQpow));
+            sim.put(tmsim, entry.getKey());
+        }
+        System.out.println("Vector Space:");
+        for(Map.Entry<Double, Integer> entry : sim.entrySet()){
+            System.out.println(entry.getValue()+" "+entry.getKey());
+        }
+        
     }
     
     private Map sumWQ(Map<String,Double> wiq) throws FileNotFoundException, IOException{
@@ -122,8 +134,17 @@ public class QueryValuate {
                 int post = this.vocab.get(entry.getKey()).pPost;
                 RandomAccessFile raf = new RandomAccessFile(file, "r");
                 raf.seek(post);
-
-                
+                for(int i=0;i<df;i++){
+                    String str = raf.readLine();
+                    int docid = Integer.parseInt(str.substring(0, str.indexOf(" ")));
+                    double wij = Double.parseDouble(str.substring(str.lastIndexOf(" ")));
+                    if(sumWQ.containsKey(docid)){
+                        sumWQ.put(docid,sumWQ.get(docid)+(wij*entry.getValue()));
+                    }
+                    else{
+                        sumWQ.put(docid, wij*entry.getValue());
+                    }
+                } 
             }
         }
         return sumWQ;
@@ -151,35 +172,12 @@ public class QueryValuate {
         }
         for (Map.Entry<String, Double> entry : tf.entrySet()){
             entry.setValue(entry.getValue()/maxtf);
+            entry.setValue(entry.getValue()*this.vocab.get(entry.getKey()).idf);
             //System.out.println(entry.getKey()+" "+entry.getValue());
         }
         
         return tf;
     }
-    
-    private double processVS(String query, DocInfo doc, int docid, Map<String,Double> tf){
-        String delimiter = "\t\n\r\f!@#$%^&*;:'\".,0123456789()_-[]{}<>?|~`+-=/ \'\b«»§΄―—’‘–°· \\� ";
-        
-        double sumWQ=0;
-        double sumWpow=0;
-        double sumpQpow=0;
-        
-        StringTokenizer tok = new StringTokenizer(query, delimiter, true);
-        while (tok.hasMoreTokens()){
-            String token = tok.nextToken();
-            token=Stemmer.Stem(token);
-            if(token.length()>1 && !this.stopwords.contains(token)){
-                if(this.vocab.containsKey(token)){
-                    double wiq = this.vocab.get(token).idf*tf.get(token);
-                    //double wij = 
-                }
-                else return 0.0;
-            }
-        }
-        
-        return sumWQ/(Math.sqrt(sumWpow*sumpQpow));
-    }
-    
     
     private double log2(double a, double b ){
         return Math.log(a)/Math.log(b);
