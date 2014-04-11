@@ -25,6 +25,7 @@ import mitos.stemmer.Stemmer;
  * @author smyrgeorge
  */
 public class QueryValuate {
+    private double avgl = 0;
     private final Map<Integer, DocInfo> docmap; 
     private final Map<String, VocInfo> vocab;
     private final HashSet<String> stopwords;
@@ -36,61 +37,77 @@ public class QueryValuate {
         
         this.initVocab();
         this.initDocMap();
+        this.avgl=this.avgl/this.docmap.size();
         Stemmer.Initialize();
         this.initStopWords(fpEN);
         this.initStopWords(fpGR);
     }
-
-
     
-    public void query(String word) throws FileNotFoundException, IOException{
+    public void queryOKAPI (String query) throws IOException{
+        Map<Double, Integer> sim = new TreeMap<>();
+        for (Map.Entry<Integer, DocInfo> entry : this.docmap.entrySet()){
+            double simDqi=processOKAPI(query, entry.getValue(), entry.getKey());
+            sim.put(simDqi, entry.getKey());
+            System.out.println(simDqi+" "+entry.getKey());
+        }
+    }
+    
+    private double processOKAPI (String query, DocInfo doc, int docid) throws IOException{
+        String delimiter = "\t\n\r\f!@#$%^&*;:'\".,0123456789()_-[]{}<>?|~`+-=/ \'\b«»§΄―—’‘–°· \\� ";
+        double sum = 0;
+        
+        StringTokenizer tok = new StringTokenizer(query, delimiter, true);
+        while (tok.hasMoreTokens()){
+            String token = tok.nextToken();
+            token=Stemmer.Stem(token);
+            if(token.length()>1 && !this.stopwords.contains(token)){
+                double IDFqi=this.IDFqi(token);
+                //System.out.println(IDFqi);
+                double fqiD=this.fqiD(token, docid);
+                //System.out.println(fqiD);
+                sum = sum +(IDFqi*((fqiD*3.0)/(fqiD+(3.0*(0.25+0.75*(doc.docLength/this.avgl))))));
+            }
+        }
+        return sum;
+    }
+
+    private double IDFqi(String word){
+        double IDFqi;
+        if(this.vocab.containsKey(word)){
+            IDFqi=this.docmap.size()-this.vocab.get(word).df+0.5;
+            IDFqi=IDFqi/(this.vocab.get(word).df+0.5);
+            //IDFqi=this.log2(IDFqi, 2.0);
+        }
+        else{
+            IDFqi=this.docmap.size()+0.5;
+            IDFqi=IDFqi/0.5;
+            //IDFqi=this.log2(IDFqi, 2.0);
+        }
+        return IDFqi;
+    }
+    
+    private int fqiD(String term, int docID) throws FileNotFoundException, IOException{
         String postLine;
-        String stWord=Stemmer.Stem(word).toLowerCase();
         String postFile = "CollectionIndex/PostingFile.txt";
         RandomAccessFile rafPost = new RandomAccessFile(postFile, "r");
 
-        rafPost.seek(this.vocab.get(stWord).pPost);
-        for(int i=0; i<this.vocab.get(stWord).idf;i++){
+        rafPost.seek(this.vocab.get(term).pPost);
+        for(int i=0; i<this.vocab.get(term).df;i++){
             postLine = rafPost.readLine();
-            System.out.println(postLine);
-            this.parsePost(postLine);
-        }
-    }
-    private void parsePost(String postLine) throws FileNotFoundException, IOException{
-        StringTokenizer tok = new StringTokenizer(postLine, " ,[]", true);
-        int docID = 0,tf = 0;
-        int i=0;
-        
-        while (tok.hasMoreTokens()){
-            String token = tok.nextToken();
-            if(!" ,[]".contains(token)){
-                if(i==0) docID=Integer.parseInt(token);
-                else if(i==1) tf=Integer.parseInt(token);
-                else this.openDoc(docID, Integer.parseInt(token));
-                i++;
-            } 
-        }
-    }
-    private void openDoc(int docID, int pos) throws FileNotFoundException, IOException{
-        String docs = "CollectionIndex/DocumentsFile.txt";
-        RandomAccessFile rafDocs = new RandomAccessFile(docs, "r");
-        String docsLine;
-        
-        while ((docsLine = rafDocs.readLine()) != null){
-            if(docID==Integer.parseInt(docsLine.substring(0, docsLine.indexOf(' ')))){
-                String docfile = docsLine.substring(docsLine.indexOf(" ")+1, docsLine.lastIndexOf(" "));
-                System.out.println(docfile.substring(0, docfile.lastIndexOf(" ")));
-                RandomAccessFile doc = new RandomAccessFile(docfile.substring(0, docfile.lastIndexOf(" ")), "r");
-                doc.seek(pos);
-                System.out.println(doc.readLine());
+            int doc = Integer.parseInt(postLine.substring(0, postLine.indexOf(" ")));
+            if(doc==docID){
+                return Integer.parseInt(postLine.substring(postLine.indexOf(" ")+1, postLine.lastIndexOf(" ")));
             }
-            
-        } 
+        }
+        return 0;
     }
     
-    public void queryPpocessor(String query) throws FileNotFoundException, UnsupportedEncodingException, IOException{
+    public void queryProcessor(String query) throws FileNotFoundException, UnsupportedEncodingException, IOException{
         double weight = this.queryWeight(query);
-        Map<Integer,Double> sim = simCounter(weight);
+        Map<Double,Integer> sim = simCounter(weight);
+        for (Map.Entry<Double, Integer> entry : sim.entrySet()){
+            System.out.println(entry.getKey()+" "+entry.getValue());
+        }
         //System.out.println(weight);
     }
     
@@ -133,8 +150,12 @@ public class QueryValuate {
     }
     
     private Map simCounter(Double weight) throws FileNotFoundException, UnsupportedEncodingException, IOException{
-        Map<Integer, Double> sim = new TreeMap<>();
-        
+        Map<Double, Integer> sim = new TreeMap<>();
+        for (Map.Entry<Integer, DocInfo> entry : this.docmap.entrySet()){
+            double value = entry.getValue().norm/Math.sqrt(entry.getValue().normPow*weight);
+            if(sim.containsKey(value)) value = value + 0.000000000000001;
+            sim.put(value, entry.getKey());
+        }
         return sim;
     }
     
@@ -161,9 +182,11 @@ public class QueryValuate {
         String str;
         while ((str = in.readLine()) != null){
             int docid = Integer.parseInt(str.substring(0, str.indexOf(" ")));
-            double normpow = Double.parseDouble(str.substring(str.lastIndexOf(" ")));
-            double norm = Double.parseDouble(str.substring(str.indexOf("_")+1, str.lastIndexOf(" ")));
-            this.docmap.put(docid, new DocInfo(norm, normpow));
+            double normpow = Double.parseDouble(str.substring(str.lastIndexOf(" "),str.lastIndexOf("*")));
+            double norm = Double.parseDouble(str.substring(str.lastIndexOf("_")+1, str.lastIndexOf(" ")));
+            int length=Integer.parseInt(str.substring(str.lastIndexOf("*")+1));
+            this.avgl=this.avgl+length;
+            this.docmap.put(docid, new DocInfo(norm, normpow,length));
         }
     }
     
@@ -178,9 +201,11 @@ public class QueryValuate {
     private class DocInfo{
         private final double norm;
         private final double normPow;
-        public DocInfo(double norm, double normPow){
+        private final int docLength;
+        public DocInfo(double norm, double normPow, int docLength){
             this.norm=norm;
             this.normPow=normPow;
+            this.docLength=docLength;
         }
     }
     

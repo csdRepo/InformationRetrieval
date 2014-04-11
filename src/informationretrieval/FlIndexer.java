@@ -25,7 +25,9 @@ import mitos.stemmer.Stemmer;
  */
 public class FlIndexer {
     private int maxintTF=0;
+    private int docWords=0;
     private final Map<String, Integer> maxTF;
+    public final Map<String, Integer> lengthDoc;
     private final HashSet<String> stopwords;
     public Map<String, TermNode> mapTerms;
     private final File folder;
@@ -40,6 +42,7 @@ public class FlIndexer {
         this.stopwords=new HashSet<>();
         this.maxTF = new TreeMap<>();
         this.mapTerms = new TreeMap<>();
+        this.lengthDoc = new TreeMap<>();
         
         Stemmer.Initialize();
         this.initStopWords(fpEN);
@@ -50,7 +53,9 @@ public class FlIndexer {
                 System.out.println(file.getCanonicalPath());
                 this.initIndex(file.getPath());
                 this.maxTF.put(file.getPath(), this.maxintTF);
+                this.lengthDoc.put(file.getPath(),this.docWords);
                 this.maxintTF=0;
+                this.docWords=0;
             } 
         }
         this.printLength();
@@ -78,8 +83,8 @@ public class FlIndexer {
     private void insertTerm(String term, String file, int pos){
         term=Stemmer.Stem(term);
         if(this.stopwords.contains(term)) return;
-
-        if(this.mapTerms.containsKey(term)){
+        this.docWords++;
+        if(this.mapTerms.containsKey(term)){            
             TermNode tm = this.mapTerms.get(term);
             if(!file.equals(tm.getLastfile())){
                 tm.setDf();

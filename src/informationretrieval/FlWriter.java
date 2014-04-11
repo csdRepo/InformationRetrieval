@@ -30,7 +30,7 @@ public class FlWriter {
         
         this.initDocmap(collectioPath);
         this.writeVocabPost(fi);
-        this.writeDocumentsFile(collectioPath);
+        this.writeDocumentsFile(collectioPath, fi);
     }
     
     private void writeVocabPost(FlIndexer fi) throws IOException{
@@ -100,7 +100,7 @@ public class FlWriter {
         return Math.log(a)/Math.log(b);
     }
     
-    private void writeDocumentsFile(String collectionPath) throws IOException{
+    private void writeDocumentsFile(String collectionPath, FlIndexer fi) throws IOException{
         File docfile = new File("CollectionIndex/DocumentsFile.txt");
         File folder = new File(collectionPath);
         File[] listOfFiles = folder.listFiles();
@@ -114,7 +114,8 @@ public class FlWriter {
                     int dot = file.getAbsolutePath().lastIndexOf('.');
                     bw.write(file.getAbsolutePath().substring(dot + 1)+"_"+
                             Double.toString(this.docNorm.get(file.getPath()))+
-                            " "+this.docNormPow.get(file.getPath())+"\n");
+                            " "+this.docNormPow.get(file.getPath())+
+                            "*"+fi.lengthDoc.get(file.getPath())+"\n");
                     i++;
                 } 
             }
