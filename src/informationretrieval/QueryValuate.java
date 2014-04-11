@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.StringTokenizer;
+import java.util.TreeMap;
 import mitos.stemmer.Stemmer;
 
 /**
@@ -24,15 +25,18 @@ import mitos.stemmer.Stemmer;
  * @author smyrgeorge
  */
 public class QueryValuate {
+    private final Map<Integer, DocInfo> docmap; 
     private final Map<String, VocInfo> vocab;
-    private final Map<String, Integer> docmaxTF;
     private final HashSet<String> stopwords;
     
     public QueryValuate(String fpEN,String fpGR) throws UnsupportedEncodingException, FileNotFoundException, IOException{
         this.vocab = new HashMap<>();
-        this.docmaxTF = new HashMap<>();
-        this.stopwords=new HashSet<>();
+        this.docmap = new TreeMap<>();
+        this.stopwords = new HashSet<>();
+        
         this.initVocab();
+        this.initDocMap();
+        Stemmer.Initialize();
         this.initStopWords(fpEN);
         this.initStopWords(fpGR);
     }
@@ -81,9 +85,63 @@ public class QueryValuate {
                 System.out.println(doc.readLine());
             }
             
-        }
-        
+        } 
     }
+    
+    public void queryPpocessor(String query) throws FileNotFoundException, UnsupportedEncodingException, IOException{
+        double weight = this.queryWeight(query);
+        Map<Integer,Double> sim = simCounter(weight);
+        //System.out.println(weight);
+    }
+    
+    private double queryWeight(String query){
+        String delimiter = "\t\n\r\f!@#$%^&*;:'\".,0123456789()_-[]{}<>?|~`+-=/ \'\b«»§΄―—’‘–°· \\� ";
+        Map<String,Double> queryMap =new HashMap<>();
+        double weight=0;
+        int maxtf = 0;
+        int tf;
+        
+        StringTokenizer tok = new StringTokenizer(query, delimiter, true);
+        while (tok.hasMoreTokens()){
+            String token = tok.nextToken();
+            token=Stemmer.Stem(token);
+            if(token.length()>1 && !this.stopwords.contains(token)){
+                if(queryMap.containsKey(token)){
+                    tf=(int)(queryMap.get(token)+1);
+                    if (tf>maxtf)maxtf=tf;
+                    queryMap.put(token, (double)tf);
+                }
+                else{
+                    queryMap.put(token, 1.00);
+                    if (1>maxtf)maxtf=1;
+                }   
+            }
+        }
+        for (Map.Entry<String, Double> entry : queryMap.entrySet()){
+            if(vocab.containsKey(entry.getKey())){
+                double tfidf= (((double)entry.getValue())/maxtf)*vocab.get(entry.getKey()).idf;
+                queryMap.put(entry.getKey(),Math.pow(tfidf, 2));
+                weight=weight+queryMap.get(entry.getKey());
+                System.out.println(entry.getKey()+" "+entry.getValue());
+            }
+            else{
+                queryMap.put(entry.getKey(), 0.00);
+                System.out.println(entry.getKey()+" "+entry.getValue());
+            }
+        }
+        return weight;
+    }
+    
+    private Map simCounter(Double weight) throws FileNotFoundException, UnsupportedEncodingException, IOException{
+        Map<Integer, Double> sim = new TreeMap<>();
+        
+        return sim;
+    }
+    
+    private double log2(double a, double b ){
+        return Math.log(a)/Math.log(b);
+    }
+    
     private void initVocab() throws UnsupportedEncodingException, FileNotFoundException, IOException{
         String str;
         String file = "CollectionIndex/VocabularyFile.txt";
@@ -96,52 +154,17 @@ public class QueryValuate {
         }
     }
     
-    public void QueryPpocessor(String Query){
-        String delimiter = "\t\n\r\f!@#$%^&*;:'\".,0123456789()_-[]{}<>?|~`+-=/ \'\b«»§΄―—’‘–°· \\� ";
-        double idf;
-        int tf;
-        int maxtf = 0;
-        Map<String,Double> queryMap =new HashMap<>();
-        Map<String,Double> queryMapIDF =new HashMap<>();
-
-        StringTokenizer tok = new StringTokenizer(Query, delimiter, true);
-          //int posInseek = linepos;
-        while (tok.hasMoreTokens()){
-          String token = tok.nextToken();
-          token=Stemmer.Stem(token);
-          //posInseek=posInseek+token.length();
-          if(token.length()>1 && !this.stopwords.contains(token)){
-              if(queryMap.containsKey(token)){
-                 tf=(int) (queryMap.get(token)+1);
-                 if (tf>maxtf)maxtf=tf;
-                 queryMap.put(token, (double)tf);
-                 //queryMapIDF.put(token, vocab.get(token).idf);
-
-              }
-              else{
-                  queryMap.put(token, 1.00);
-                  if (1>maxtf)maxtf=1;
-                  //queryMapIDF.put(token, vocab.get(token).idf);
-              }   
-          }
-
+    private void initDocMap() throws FileNotFoundException, UnsupportedEncodingException, IOException{
+        String file = "CollectionIndex/DocumentsFile.txt";
+        BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF8"));
+        
+        String str;
+        while ((str = in.readLine()) != null){
+            int docid = Integer.parseInt(str.substring(0, str.indexOf(" ")));
+            double normpow = Double.parseDouble(str.substring(str.lastIndexOf(" ")));
+            double norm = Double.parseDouble(str.substring(str.indexOf("_")+1, str.lastIndexOf(" ")));
+            this.docmap.put(docid, new DocInfo(norm, normpow));
         }
-        for (Map.Entry<String, Double> entry : queryMap.entrySet()){
-            if(vocab.containsKey(entry.getKey())){
-               double tfidf= (((double)entry.getValue())/maxtf)*vocab.get(entry.getKey()).idf;
-               tfidf=log2(tfidf, 2);
-               queryMap.put(entry.getKey(),Math.pow(tfidf, 2));
-               System.out.println(entry.getKey()+" "+entry.getValue());
-            }
-            else{
-              queryMap.put(entry.getKey(), 0.00);
-              System.out.println(entry.getKey()+" "+entry.getValue());
-            }
-        }
-    }
-    
-    private double log2(double a, double b ){
-        return Math.log(a)/Math.log(b);
     }
     
     private void initStopWords(String fp) throws FileNotFoundException, UnsupportedEncodingException, IOException{
@@ -149,6 +172,15 @@ public class QueryValuate {
         String str;
         while ((str = in.readLine()) != null){
             this.stopwords.add(Stemmer.Stem(str));
+        }
+    }
+    
+    private class DocInfo{
+        private final double norm;
+        private final double normPow;
+        public DocInfo(double norm, double normPow){
+            this.norm=norm;
+            this.normPow=normPow;
         }
     }
     

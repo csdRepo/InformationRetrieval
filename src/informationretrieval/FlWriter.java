@@ -112,7 +112,7 @@ public class FlWriter {
                 if (file.isFile()) {
                     bw.write(i+" "+file.getPath()+" ");
                     int dot = file.getAbsolutePath().lastIndexOf('.');
-                    bw.write(file.getAbsolutePath().substring(dot + 1)+" "+
+                    bw.write(file.getAbsolutePath().substring(dot + 1)+"_"+
                             Double.toString(this.docNorm.get(file.getPath()))+
                             " "+this.docNormPow.get(file.getPath())+"\n");
                     i++;
