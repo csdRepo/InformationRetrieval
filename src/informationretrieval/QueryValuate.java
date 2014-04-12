@@ -15,6 +15,7 @@ import java.io.RandomAccessFile;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.TreeMap;
@@ -48,7 +49,8 @@ public class QueryValuate {
         for (Map.Entry<Integer, DocInfo> entry : this.docmap.entrySet()){
             double simDqi=processOKAPI(query, entry.getValue(), entry.getKey());
             if(sim.containsKey(simDqi)) simDqi = simDqi+0.00000000001;
-            sim.put(simDqi, entry.getKey());
+            if(simDqi!=0.0)
+                sim.put(simDqi, entry.getKey());
         }
         System.out.println("OKAPI:");
         for(Map.Entry<Double,Integer> entry : sim.entrySet()){
@@ -119,7 +121,7 @@ public class QueryValuate {
             sim.put(tmsim, entry.getKey());
         }
         System.out.println("Vector Space:");
-        for(Map.Entry<Double, Integer> entry : sim.entrySet()){
+        for (Map.Entry<Double, Integer> entry : sim.entrySet()) {
             System.out.println(entry.getValue()+" "+entry.getKey());
         }
         
