@@ -26,24 +26,25 @@ public class Main {
      * @throws java.io.UnsupportedEncodingException
      */
     public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException, IOException {
-        FlIndexer fi = new FlIndexer("files/stopwordsEn.txt","files/stopwordsGr.txt","files/documentCollection/all");
-        FlWriter fw = new FlWriter(fi, "files/documentCollection/all");
-        
-       QueryValuate qv = new QueryValuate("files/stopwordsEn.txt","files/stopwordsGr.txt","CollectionIndex/");
-       
-       NavigableMap<Double,Integer> simOKAPI = (NavigableMap) qv.queryOKAPI("plays piano");
-       System.out.println("OKAPI:");
-       for(NavigableMap.Entry<Double,Integer> entry: simOKAPI.entrySet()){
-           System.out.println(entry.getValue()+" "+entry.getKey());
-           System.out.println(qv.getFilePath(entry.getValue()));
-           ArrayList<String> snippet = qv.getSnippet(entry.getValue(), "plays piano", qv.getFilePath(entry.getValue()));
-            for (String snpt : snippet) {
-                System.out.print(snpt+"... ");
-            }
-            //Desktop desktop = Desktop.getDesktop();
-            ///File file = new File(qv.getFilePath(entry.getValue()));
-            //desktop.open(file.getAbsoluteFile());
-       }
+        GUInterface.main(args);
+//        FlIndexer fi = new FlIndexer("files/stopwordsEn.txt","files/stopwordsGr.txt","files/documentCollection/all");
+//        FlWriter fw = new FlWriter(fi, "files/documentCollection/all");
+//        
+//       QueryValuate qv = new QueryValuate("files/stopwordsEn.txt","files/stopwordsGr.txt","CollectionIndex/");
+//       
+//       NavigableMap<Double,Integer> simOKAPI = (NavigableMap) qv.queryOKAPI("plays piano");
+//       System.out.println("OKAPI:");
+//       for(NavigableMap.Entry<Double,Integer> entry: simOKAPI.entrySet()){
+//           System.out.println(entry.getValue()+" "+entry.getKey());
+//           System.out.println(qv.getFilePath(entry.getValue()));
+//           ArrayList<String> snippet = qv.getSnippet(entry.getValue(), "plays piano", qv.getFilePath(entry.getValue()));
+//            for (String snpt : snippet) {
+//                System.out.print(snpt+"... ");
+//            }
+//            //Desktop desktop = Desktop.getDesktop();
+//            ///File file = new File(qv.getFilePath(entry.getValue()));
+//            //desktop.open(file.getAbsoluteFile());
+//       }
        
        
 //       NavigableMap<Double,Integer> simVS = (NavigableMap) qv.queryVS("plays piano");

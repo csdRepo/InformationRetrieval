@@ -13,7 +13,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.RandomAccessFile;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -236,9 +238,14 @@ public class QueryValuate {
                                 String token1 = tok1.nextToken();
                                 String del = "[] ,";
                                 if(!del.contains(token1)){
+                                    byte[] thebytearray;
+                                    //thebytearray=rafdoc.readLine().getBytes("UTF-8");
+                                    //String changed=new String(thebytearray, Charset.forName("UTF-8"));
+                                    
                                     //System.out.println(token1);
                                     rafdoc.seek(Integer.parseInt(token1));
                                     snippet.add(rafdoc.readLine());
+                                    //snippet.add(rafdoc.readLine());
                                 }
                             }
                         }

@@ -607,7 +607,6 @@
                   <Properties>
                     <Property name="columns" type="int" value="20"/>
                     <Property name="rows" type="int" value="5"/>
-                    <Property name="text" type="java.lang.String" value="dasadas"/>
                   </Properties>
                 </Component>
               </SubComponents>

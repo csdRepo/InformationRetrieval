@@ -423,7 +423,6 @@ public class GUInterface extends javax.swing.JFrame {
 
         jTextArea3.setColumns(20);
         jTextArea3.setRows(5);
-        jTextArea3.setText("dasadas");
         jScrollPane3.setViewportView(jTextArea3);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -629,6 +628,7 @@ public class GUInterface extends javax.swing.JFrame {
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
          // TODO add your handling code here:
        jTextArea3.setText(null);
+//        jTextArea3.
         long start = currentTimeMillis();
        NavigableMap<Double,Integer> simVS = null;
         try {
