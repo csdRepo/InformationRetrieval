@@ -17,6 +17,8 @@ import java.util.Map;
 /**
  *
  * @author smyrgeorge
+ * @author jmoschon
+ * @version  1.0
  */
 public class FlWriter {
     private Map<String, Integer> docMap;

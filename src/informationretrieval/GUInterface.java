@@ -10,13 +10,16 @@ import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import static java.lang.System.currentTimeMillis;
+import java.util.ArrayList;
+import java.util.NavigableMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 
 /**
- *
+ * @author jmoschon 
  * @author smyrgeorge
+ * @version 1.0
  */
 public class GUInterface extends javax.swing.JFrame {
 
@@ -405,11 +408,22 @@ public class GUInterface extends javax.swing.JFrame {
         jLabel11.setText("jLabel11");
 
         jButton10.setText("VectorSpace");
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
 
         jButton11.setText("OKAPI");
+        jButton11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton11ActionPerformed(evt);
+            }
+        });
 
         jTextArea3.setColumns(20);
         jTextArea3.setRows(5);
+        jTextArea3.setText("dasadas");
         jScrollPane3.setViewportView(jTextArea3);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -427,13 +441,13 @@ public class GUInterface extends javax.swing.JFrame {
                                 .addGap(195, 195, 195)
                                 .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addGap(105, 105, 105)
+                                .addGap(93, 93, 93)
                                 .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton10)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton11)))
-                        .addGap(0, 91, Short.MAX_VALUE)))
+                        .addGap(0, 103, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -611,6 +625,85 @@ public class GUInterface extends javax.swing.JFrame {
             jTextArea2.append("Open command cancelled by user." + "\n");
         }
     }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+         // TODO add your handling code here:
+       jTextArea3.setText(null);
+        long start = currentTimeMillis();
+       NavigableMap<Double,Integer> simVS = null;
+        try {
+            simVS = (NavigableMap) query.queryVS(jTextField7.getText());
+        } catch (IOException ex) {
+            Logger.getLogger(GUInterface.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       System.out.println("Vector space :");
+       for(NavigableMap.Entry<Double,Integer> entry: simVS.entrySet()){
+           jTextArea3.append("Vector Space result: "+entry.getKey().toString()+"\n");
+           try {
+              jTextArea3.append(query.getFilePath(entry.getValue())+"\n");
+           } catch (UnsupportedEncodingException ex) {
+               Logger.getLogger(GUInterface.class.getName()).log(Level.SEVERE, null, ex);
+           } catch (IOException ex) {
+               Logger.getLogger(GUInterface.class.getName()).log(Level.SEVERE, null, ex);
+           }
+           ArrayList<String> snippet = null;
+           try {
+               snippet = query.getSnippet(entry.getValue(), jTextField7.getText(), query.getFilePath(entry.getValue()));
+           } catch (IOException ex) {
+               Logger.getLogger(GUInterface.class.getName()).log(Level.SEVERE, null, ex);
+           }
+            for (String snpt : snippet) {
+                jTextArea3.append(snpt+"... ");
+            }
+            jTextArea3.append("\n\n");
+            //Desktop desktop = Desktop.getDesktop();
+            ///File file = new File(qv.getFilePath(entry.getValue()));
+            //desktop.open(file.getAbsoluteFile());
+       }
+           long elapsedTime = System.currentTimeMillis()-start;
+           // jTextArea1.append("Done Writing Files to CollectionIndex folder!\n");
+            jTextArea3.append("Took "+elapsedTime/1000.0+"s\n");
+  
+    }//GEN-LAST:event_jButton10ActionPerformed
+
+    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
+        // TODO add your handling code here:
+       jTextArea3.setText(null);
+        long start = currentTimeMillis();
+       NavigableMap<Double,Integer> simOKAPI = null;
+        try {
+            simOKAPI = (NavigableMap) query.queryOKAPI(jTextField7.getText());
+        } catch (IOException ex) {
+            Logger.getLogger(GUInterface.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       System.out.println("OKAPI:");
+       for(NavigableMap.Entry<Double,Integer> entry: simOKAPI.entrySet()){
+           jTextArea3.append("OKAPI result: "+entry.getKey().toString()+"\n");
+           try {
+              jTextArea3.append(query.getFilePath(entry.getValue())+"\n");
+           } catch (UnsupportedEncodingException ex) {
+               Logger.getLogger(GUInterface.class.getName()).log(Level.SEVERE, null, ex);
+           } catch (IOException ex) {
+               Logger.getLogger(GUInterface.class.getName()).log(Level.SEVERE, null, ex);
+           }
+           ArrayList<String> snippet = null;
+           try {
+               snippet = query.getSnippet(entry.getValue(), jTextField7.getText(), query.getFilePath(entry.getValue()));
+           } catch (IOException ex) {
+               Logger.getLogger(GUInterface.class.getName()).log(Level.SEVERE, null, ex);
+           }
+            for (String snpt : snippet) {
+                jTextArea3.append(snpt+"... ");
+            }
+            jTextArea3.append("\n\n");
+            //Desktop desktop = Desktop.getDesktop();
+            ///File file = new File(qv.getFilePath(entry.getValue()));
+            //desktop.open(file.getAbsoluteFile());
+       }
+           long elapsedTime = System.currentTimeMillis()-start;
+           // jTextArea1.append("Done Writing Files to CollectionIndex folder!\n");
+            jTextArea3.append("Took "+elapsedTime/1000.0+"s\n");
+    }//GEN-LAST:event_jButton11ActionPerformed
 
     /**
      * @param args the command line arguments

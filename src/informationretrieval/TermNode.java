@@ -11,8 +11,9 @@ import com.google.common.collect.Multimap;
 import java.util.LinkedList;
 
 /**
- *
+ * @author  jmoschon
  * @author smyrgeorge
+ * @version 1.0
  */
 public class TermNode {
     

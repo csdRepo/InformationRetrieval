@@ -20,10 +20,18 @@ import java.util.TreeMap;
 import mitos.stemmer.Stemmer;
 
 /**
+ * FileIndexer class.
+ *  se auth tin class kanoume intexing sta arxeia pou  tha exoume gia evretiriash
+ *  dhladh diavazoume ena ena ta arxeia epeksergazomaste tis lekseis (stemming,stopwords)
+ *  kai ta apothikevoume se katalhles domes.
+ * 
  *
  * @author smyrgeorge
+ * @author jmoschon
+ * @version 1.0
  */
 public class FlIndexer {
+    
     private int maxintTF=0;
     private int docWords=0;
     private final Map<String, Integer> maxTF;
