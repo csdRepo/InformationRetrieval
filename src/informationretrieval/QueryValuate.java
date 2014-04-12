@@ -46,18 +46,14 @@ public class QueryValuate {
     }
     
     public Map queryOKAPI (String query) throws IOException{
-        Map<Double, Integer> sim = new TreeMap<>();
+        TreeMap<Double, Integer> sim = new TreeMap<>();
         for (Map.Entry<Integer, DocInfo> entry : this.docmap.entrySet()){
             double simDqi=processOKAPI(query, entry.getValue(), entry.getKey());
             if(sim.containsKey(simDqi)) simDqi = simDqi+0.00000000001;
             if(simDqi!=0.0)
                 sim.put(simDqi, entry.getKey());
         }
-        System.out.println("OKAPI:");
-        for(Map.Entry<Double,Integer> entry : sim.entrySet()){
-            System.out.println(entry.getValue()+" "+entry.getKey());
-        }
-        return sim;
+        return sim.descendingMap();
     }
     
     private double processOKAPI (String query, DocInfo doc, int docid) throws IOException{
@@ -113,7 +109,7 @@ public class QueryValuate {
         Map<String,Double> wiq = this.wiq(query);
         double sumWIQpow=0;
         Map<Integer, Double> sumWQ = this.sumWQ(wiq);
-        Map<Double, Integer> sim = new TreeMap<>();
+        TreeMap<Double, Integer> sim = new TreeMap<>();
              
         for(Map.Entry<String, Double> entry : wiq.entrySet()){
             sumWIQpow=sumWIQpow+entry.getValue()*entry.getValue();
@@ -123,11 +119,7 @@ public class QueryValuate {
             double tmsim = entry.getValue()/(Math.sqrt(this.docmap.get(entry.getKey()).norm*sumWIQpow));
             sim.put(tmsim, entry.getKey());
         }
-        System.out.println("Vector Space:");
-        for (Map.Entry<Double, Integer> entry : sim.entrySet()) {
-            System.out.println(entry.getValue()+" "+entry.getKey());
-        }
-        return sim;        
+        return sim.descendingMap();        
     }
     
     private Map sumWQ(Map<String,Double> wiq) throws FileNotFoundException, IOException{
@@ -201,6 +193,17 @@ public class QueryValuate {
             this.vocab.put(temp[0], new VocInfo(Integer.parseInt(temp[1]),
                     Double.parseDouble(temp[2]), Integer.parseInt(temp[3])));
         }
+    }
+    
+    public String getFilePath(int docID) throws FileNotFoundException, UnsupportedEncodingException, IOException{
+        String file = this.colPath+"/DocumentsFile.txt";
+        BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF8"));
+        String str;
+        while ((str = in.readLine()) != null){
+            int fdocid = Integer.parseInt(str.substring(0, str.indexOf(" ")));
+            if(fdocid==docID) return str.substring(str.indexOf(" ")+1, str.lastIndexOf(" "));
+        }
+        return null;
     }
     
     private void initDocMap() throws FileNotFoundException, UnsupportedEncodingException, IOException{

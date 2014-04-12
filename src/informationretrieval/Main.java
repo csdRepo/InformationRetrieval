@@ -9,6 +9,7 @@ package informationretrieval;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.NavigableMap;
 
 /**
  *
@@ -26,9 +27,21 @@ public class Main {
         //FlWriter fw = new FlWriter(fi, "files/documentCollection/test");
         
        QueryValuate qv = new QueryValuate("files/stopwordsEn.txt","files/stopwordsGr.txt","CollectionIndex/");
-       qv.queryOKAPI("piano");
-       qv.queryVS("piano");
-
+       
+       NavigableMap<Double,Integer> simOKAPI = (NavigableMap) qv.queryOKAPI("plays piano");
+       System.out.println("OKAPI:");
+       for(NavigableMap.Entry<Double,Integer> entry: simOKAPI.entrySet()){
+           System.out.println(entry.getValue()+" "+entry.getKey());
+           System.out.println(qv.getFilePath(entry.getValue()));
+       }
+       
+       
+       NavigableMap<Double,Integer> simVS = (NavigableMap) qv.queryVS("plays piano");
+       System.out.println("VS:");
+       for(NavigableMap.Entry<Double,Integer> entry: simVS.entrySet()){
+           System.out.println(entry.getValue()+" "+entry.getKey());
+           System.out.println(qv.getFilePath(entry.getValue()));
+       }
        
     }
 }
