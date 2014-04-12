@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.RandomAccessFile;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -204,6 +205,49 @@ public class QueryValuate {
             if(fdocid==docID) return str.substring(str.indexOf(" ")+1, str.lastIndexOf(" "));
         }
         return null;
+    }
+    
+    public ArrayList getSnippet(int docID, String query, String docPath) throws FileNotFoundException, IOException{
+        String delimiter = "\t\n\r\f!@#$%^&*;:'\".,0123456789()_-[]{}<>?|~`+-=/ \'\b«»§΄―—’‘–°· \\� ";
+        ArrayList<String> snippet = new ArrayList<>();
+        
+        StringTokenizer tok = new StringTokenizer(query, delimiter, true);
+        while (tok.hasMoreTokens()){
+            String token = tok.nextToken();
+            token=Stemmer.Stem(token);
+            if(token.length()>1 && !this.stopwords.contains(token)){
+                if(this.vocab.containsKey(token)){
+                    int pPost = this.vocab.get(token).pPost;
+                    String file = this.colPath+"/PostingFile.txt";
+                    RandomAccessFile raf = new RandomAccessFile(file, "r");
+                    raf.seek(pPost);
+                    String str;
+                    for(int i=0;i<this.vocab.get(token).df;i++){
+                        str = raf.readLine();
+                        int docid = Integer.parseInt(str.substring(0, str.indexOf(" ")));
+                        if(docid==docID){
+                            String line;
+                            RandomAccessFile rafdoc = new RandomAccessFile(docPath, "r");
+                            //System.out.println(str);
+                            str=str.substring(str.indexOf("[")+1, str.lastIndexOf("]"));
+                            //System.out.println(str);
+                            StringTokenizer tok1 = new StringTokenizer(str, "[] ,", true);
+                            while(tok1.hasMoreTokens()){
+                                String token1 = tok1.nextToken();
+                                String del = "[] ,";
+                                if(!del.contains(token1)){
+                                    //System.out.println(token1);
+                                    rafdoc.seek(Integer.parseInt(token1));
+                                    snippet.add(rafdoc.readLine());
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        return snippet;
     }
     
     private void initDocMap() throws FileNotFoundException, UnsupportedEncodingException, IOException{

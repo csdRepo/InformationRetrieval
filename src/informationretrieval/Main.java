@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.NavigableMap;
 
 /**
@@ -25,8 +26,8 @@ public class Main {
      * @throws java.io.UnsupportedEncodingException
      */
     public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException, IOException {
-        FlIndexer fi = new FlIndexer("files/stopwordsEn.txt","files/stopwordsGr.txt","files/documentCollection/test");
-        FlWriter fw = new FlWriter(fi, "files/documentCollection/test");
+        FlIndexer fi = new FlIndexer("files/stopwordsEn.txt","files/stopwordsGr.txt","files/documentCollection/all");
+        FlWriter fw = new FlWriter(fi, "files/documentCollection/all");
         
        QueryValuate qv = new QueryValuate("files/stopwordsEn.txt","files/stopwordsGr.txt","CollectionIndex/");
        
@@ -35,18 +36,22 @@ public class Main {
        for(NavigableMap.Entry<Double,Integer> entry: simOKAPI.entrySet()){
            System.out.println(entry.getValue()+" "+entry.getKey());
            System.out.println(qv.getFilePath(entry.getValue()));
-           //Desktop desktop = Desktop.getDesktop();
-           ///File file = new File(qv.getFilePath(entry.getValue()));
-           //desktop.open(file.getAbsoluteFile());
+           ArrayList<String> snippet = qv.getSnippet(entry.getValue(), "plays piano", qv.getFilePath(entry.getValue()));
+            for (String snpt : snippet) {
+                System.out.print(snpt+"... ");
+            }
+            //Desktop desktop = Desktop.getDesktop();
+            ///File file = new File(qv.getFilePath(entry.getValue()));
+            //desktop.open(file.getAbsoluteFile());
        }
        
        
-       NavigableMap<Double,Integer> simVS = (NavigableMap) qv.queryVS("plays piano");
-       System.out.println("VS:");
-       for(NavigableMap.Entry<Double,Integer> entry: simVS.entrySet()){
-           System.out.println(entry.getValue()+" "+entry.getKey());
-           System.out.println(qv.getFilePath(entry.getValue()));
-       }
+//       NavigableMap<Double,Integer> simVS = (NavigableMap) qv.queryVS("plays piano");
+//       System.out.println("VS:");
+//       for(NavigableMap.Entry<Double,Integer> entry: simVS.entrySet()){
+//           System.out.println(entry.getValue()+" "+entry.getKey());
+//           System.out.println(qv.getFilePath(entry.getValue()));
+//       }
        
     }
 }
