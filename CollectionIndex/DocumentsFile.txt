@@ -1,5 +1,5 @@
-0 files/documentCollection/test/d4.txt txt_10.590277777777779*3
-1 files/documentCollection/test/d1.txt txt_4.340277777777779*2
-2 files/documentCollection/test/d5.txt txt_16.145833333333336*5
-3 files/documentCollection/test/d2.txt txt_4.340277777777779*2
-4 files/documentCollection/test/d3.txt txt_8.333333333333334*3
+0 files\documentCollection\test\d1.txt txt_4.340277777777779*2
+1 files\documentCollection\test\d2.txt txt_4.340277777777779*2
+2 files\documentCollection\test\d3.txt txt_8.333333333333334*3
+3 files\documentCollection\test\d4.txt txt_10.590277777777779*3
+4 files\documentCollection\test\d5.txt txt_16.145833333333336*5

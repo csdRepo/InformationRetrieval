@@ -567,7 +567,7 @@ public class GUInterface extends javax.swing.JFrame {
         try {
             jTextArea2.append("Opennig Collection and Stop Words Files..\n");
             long start = currentTimeMillis();
-            this.query = new QueryValuate(stwEN, stwGR);
+            this.query = new QueryValuate(stwEN, stwGR, path);
             jTextArea2.append("Done opennig Collection and Stop Words Files!\n");
            // jTextArea1.append("Writing Files..\n");
            // this.fw = new FlWriter(this.fi, path);
