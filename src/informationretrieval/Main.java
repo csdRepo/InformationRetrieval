@@ -22,12 +22,12 @@ public class Main {
      * @throws java.io.UnsupportedEncodingException
      */
     public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException, IOException {
-        FlIndexer fi = new FlIndexer("files/stopwordsEn.txt","files/stopwordsGr.txt","files/documentCollection/test");
-        FlWriter fw = new FlWriter(fi, "files/documentCollection/test");
+        //FlIndexer fi = new FlIndexer("files/stopwordsEn.txt","files/stopwordsGr.txt","files/documentCollection/test");
+        //FlWriter fw = new FlWriter(fi, "files/documentCollection/test");
         
-       QueryValuate qv = new QueryValuate("files/stopwordsEn.txt","files/stopwordsGr.txt");
-       qv.queryOKAPI("plays guitar");
-       qv.queryVS("plays guitar");
+       QueryValuate qv = new QueryValuate("files/stopwordsEn.txt","files/stopwordsGr.txt","CollectionIndex/");
+       qv.queryOKAPI("piano");
+       qv.queryVS("piano");
 
        
     }
