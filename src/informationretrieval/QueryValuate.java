@@ -15,7 +15,6 @@ import java.io.RandomAccessFile;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.TreeMap;
@@ -26,12 +25,14 @@ import mitos.stemmer.Stemmer;
  * @author smyrgeorge
  */
 public class QueryValuate {
+    private final String colPath;
     private double avgl = 0;
     private final Map<Integer, DocInfo> docmap; 
     private final Map<String, VocInfo> vocab;
     private final HashSet<String> stopwords;
     
-    public QueryValuate(String fpEN,String fpGR) throws UnsupportedEncodingException, FileNotFoundException, IOException{
+    public QueryValuate(String fpEN,String fpGR, String colPath) throws UnsupportedEncodingException, FileNotFoundException, IOException{
+        this.colPath = colPath;
         this.vocab = new HashMap<>();
         this.docmap = new TreeMap<>();
         this.stopwords = new HashSet<>();
@@ -44,7 +45,7 @@ public class QueryValuate {
         this.initStopWords(fpGR);
     }
     
-    public void queryOKAPI (String query) throws IOException{
+    public Map queryOKAPI (String query) throws IOException{
         Map<Double, Integer> sim = new TreeMap<>();
         for (Map.Entry<Integer, DocInfo> entry : this.docmap.entrySet()){
             double simDqi=processOKAPI(query, entry.getValue(), entry.getKey());
@@ -56,6 +57,7 @@ public class QueryValuate {
         for(Map.Entry<Double,Integer> entry : sim.entrySet()){
             System.out.println(entry.getValue()+" "+entry.getKey());
         }
+        return sim;
     }
     
     private double processOKAPI (String query, DocInfo doc, int docid) throws IOException{
@@ -92,9 +94,10 @@ public class QueryValuate {
     
     private int fqiD(String term, int docID) throws FileNotFoundException, IOException{
         String postLine;
-        String postFile = "CollectionIndex/PostingFile.txt";
+        String postFile =this.colPath+"PostingFile.txt";
         RandomAccessFile rafPost = new RandomAccessFile(postFile, "r");
 
+        if(!this.vocab.containsKey(term)) return 0;
         rafPost.seek(this.vocab.get(term).pPost);
         for(int i=0; i<this.vocab.get(term).df;i++){
             postLine = rafPost.readLine();
@@ -106,7 +109,7 @@ public class QueryValuate {
         return 0;
     }
     
-    public void queryVS(String query) throws FileNotFoundException, IOException {
+    public Map queryVS(String query) throws FileNotFoundException, IOException {
         Map<String,Double> wiq = this.wiq(query);
         double sumWIQpow=0;
         Map<Integer, Double> sumWQ = this.sumWQ(wiq);
@@ -124,11 +127,11 @@ public class QueryValuate {
         for (Map.Entry<Double, Integer> entry : sim.entrySet()) {
             System.out.println(entry.getValue()+" "+entry.getKey());
         }
-        
+        return sim;        
     }
     
     private Map sumWQ(Map<String,Double> wiq) throws FileNotFoundException, IOException{
-        String file = "CollectionIndex/PostingFile.txt";
+        String file  =this.colPath+"PostingFile.txt";
         Map<Integer,Double> sumWQ = new HashMap<>();
         for (Map.Entry<String,Double> entry : wiq.entrySet()){
             if(this.vocab.containsKey(entry.getKey())){
@@ -173,8 +176,11 @@ public class QueryValuate {
             }   
         }
         for (Map.Entry<String, Double> entry : tf.entrySet()){
-            entry.setValue(entry.getValue()/maxtf);
-            entry.setValue(entry.getValue()*this.vocab.get(entry.getKey()).idf);
+            if(this.vocab.containsKey(entry.getKey())){
+                entry.setValue(entry.getValue()/maxtf);
+                entry.setValue(entry.getValue()*this.vocab.get(entry.getKey()).idf);
+            }
+            else entry.setValue(0.0);
             //System.out.println(entry.getKey()+" "+entry.getValue());
         }
         
@@ -187,7 +193,7 @@ public class QueryValuate {
     
     private void initVocab() throws UnsupportedEncodingException, FileNotFoundException, IOException{
         String str;
-        String file = "CollectionIndex/VocabularyFile.txt";
+        String file = this.colPath+"VocabularyFile.txt";
         BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF8"));
         
         while ((str = in.readLine()) != null){
@@ -198,7 +204,7 @@ public class QueryValuate {
     }
     
     private void initDocMap() throws FileNotFoundException, UnsupportedEncodingException, IOException{
-        String file = "CollectionIndex/DocumentsFile.txt";
+        String file = this.colPath+"DocumentsFile.txt";
         BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF8"));
         
         String str;
