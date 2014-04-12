@@ -94,7 +94,7 @@ public class QueryValuate {
     
     private int fqiD(String term, int docID) throws FileNotFoundException, IOException{
         String postLine;
-        String postFile =this.colPath+"PostingFile.txt";
+        String postFile =this.colPath+"/PostingFile.txt";
         RandomAccessFile rafPost = new RandomAccessFile(postFile, "r");
 
         if(!this.vocab.containsKey(term)) return 0;
@@ -131,7 +131,7 @@ public class QueryValuate {
     }
     
     private Map sumWQ(Map<String,Double> wiq) throws FileNotFoundException, IOException{
-        String file  =this.colPath+"PostingFile.txt";
+        String file  =this.colPath+"/PostingFile.txt";
         Map<Integer,Double> sumWQ = new HashMap<>();
         for (Map.Entry<String,Double> entry : wiq.entrySet()){
             if(this.vocab.containsKey(entry.getKey())){
@@ -193,7 +193,7 @@ public class QueryValuate {
     
     private void initVocab() throws UnsupportedEncodingException, FileNotFoundException, IOException{
         String str;
-        String file = this.colPath+"VocabularyFile.txt";
+        String file = this.colPath+"/VocabularyFile.txt";
         BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF8"));
         
         while ((str = in.readLine()) != null){
@@ -204,7 +204,7 @@ public class QueryValuate {
     }
     
     private void initDocMap() throws FileNotFoundException, UnsupportedEncodingException, IOException{
-        String file = this.colPath+"DocumentsFile.txt";
+        String file = this.colPath+"/DocumentsFile.txt";
         BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF8"));
         
         String str;
