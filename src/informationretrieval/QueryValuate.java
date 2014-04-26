@@ -60,7 +60,7 @@ public class QueryValuate {
     private double processOKAPI (String query, DocInfo doc, int docid) throws IOException{
         String delimiter = "\t\n\r\f!@#$%^&*;:'\".,0123456789()_-[]{}<>?|~`+-=/ \'\b«»§΄―—’‘–°· \\� ";
         double sum = 0;
-        
+      weights("peos:::::::2.0 arixia.a:3.0 peoulinos:3.0");
         StringTokenizer tok = new StringTokenizer(query, delimiter, true);
         while (tok.hasMoreTokens()){
             String token = tok.nextToken();
@@ -73,7 +73,33 @@ public class QueryValuate {
         }
         return sum;
     }
+    private void weights(String query)throws NumberFormatException{
+        String delimiter = "\t\n\r\f!@#$%^&*;:'\",0123456789()_-[]{}<>?|~`+-=/ \'\b«»§΄―—’‘–°· \\� ";
+        double sum = 0;
+        Map<String,Double> map_strings= new HashMap<>();
+        StringTokenizer tok = new StringTokenizer(query, delimiter, true);
+        while (tok.hasMoreTokens()){
+            String token = tok.nextToken();
+            if(query.contains(token+":")&& token.length()>1 && !this.stopwords.contains(token)){
+                System.out.println(".........."+token);
+                try{
+                 double weight =Double.parseDouble(tok.nextToken());
+                }
+            }
+            token=Stemmer.Stem(token);
+            if(token.length()>1 && !this.stopwords.contains(token)){
+                map_strings.put(token, 1.0);
+            
+            }    
+        }
+        
 
+        for(Map.Entry<String,Double> entry: map_strings.entrySet()){
+            System.out.println(entry.getKey()+" "+entry.getValue());
+        }
+        
+    
+    }
     private double IDFqi(String word){
         double IDFqi;
         if(this.vocab.containsKey(word)){
