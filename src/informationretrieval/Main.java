@@ -30,7 +30,7 @@ public class Main {
         FlIndexer fi = new FlIndexer("files/stopwordsEn.txt","files/stopwordsGr.txt","files/documentCollection/all");
         FlWriter fw = new FlWriter(fi, "files/documentCollection/all");
         
-       //QueryValuate qv = new QueryValuate("files/stopwordsEn.txt","files/stopwordsGr.txt","CollectionIndex/");
+       QueryValuate qv = new QueryValuate("files/stopwordsEn.txt","files/stopwordsGr.txt","CollectionIndex/");
        
        NavigableMap<Double,Integer> simOKAPI = (NavigableMap) qv.queryOKAPI("plays piano");
        System.out.println("OKAPI:");
