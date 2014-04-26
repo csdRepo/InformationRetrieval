@@ -1,30 +1,31 @@
-0 /home/smyrgeorge/NetBeansProjects/InformationRetrieval/files/documentCollection/all/THE ENGLISH NOVEL.txt txt_446.4390924783741*35420
-1 /home/smyrgeorge/NetBeansProjects/InformationRetrieval/files/documentCollection/all/Autumn.txt txt_173.58399039957317*24420
-2 /home/smyrgeorge/NetBeansProjects/InformationRetrieval/files/documentCollection/all/THE MIDNIGHT PASSENGER.txt txt_1629.0666378064327*36962
-3 /home/smyrgeorge/NetBeansProjects/InformationRetrieval/files/documentCollection/all/Erwtokritos.txt txt_128.3696499275903*55112
-4 /home/smyrgeorge/NetBeansProjects/InformationRetrieval/files/documentCollection/all/Electra.txt txt_151.3116398345036*6952
-5 /home/smyrgeorge/NetBeansProjects/InformationRetrieval/files/documentCollection/all/SLEEPING FIRES.txt txt_333.0604940464494*19256
-6 /home/smyrgeorge/NetBeansProjects/InformationRetrieval/files/documentCollection/all/COCOA AND CHOCOLATE.txt txt_267.5330577058322*18909
-7 /home/smyrgeorge/NetBeansProjects/InformationRetrieval/files/documentCollection/all/RAW GOLD.txt txt_1770.2193296369035*21624
-8 /home/smyrgeorge/NetBeansProjects/InformationRetrieval/files/documentCollection/all/Monogramma.txt txt_63.97833528706078*767
-9 /home/smyrgeorge/NetBeansProjects/InformationRetrieval/files/documentCollection/all/Lysistrata.txt txt_157.1502846015132*9435
-10 /home/smyrgeorge/NetBeansProjects/InformationRetrieval/files/documentCollection/all/Democracy An American Novel.txt txt_605.3806689178068*25788
-11 /home/smyrgeorge/NetBeansProjects/InformationRetrieval/files/documentCollection/all/USF2.txt txt_1250.476504604973*1258
-12 /home/smyrgeorge/NetBeansProjects/InformationRetrieval/files/documentCollection/all/BLUEBELL.txt txt_653.0231081654631*41885
-13 /home/smyrgeorge/NetBeansProjects/InformationRetrieval/files/documentCollection/all/The Daughter of a Magnate.txt txt_308.12281352197095*22169
-14 /home/smyrgeorge/NetBeansProjects/InformationRetrieval/files/documentCollection/all/The Iliad of Homer.txt txt_312.2014991974436*97223
-15 /home/smyrgeorge/NetBeansProjects/InformationRetrieval/files/documentCollection/all/Oidypous Tyrannos.txt txt_258.8570079274394*8403
-16 /home/smyrgeorge/NetBeansProjects/InformationRetrieval/files/documentCollection/all/The house behind the cedars.txt txt_1223.0238221700188*27915
-17 /home/smyrgeorge/NetBeansProjects/InformationRetrieval/files/documentCollection/all/THE RAVEN.txt txt_216.5024299373263*1585
-18 /home/smyrgeorge/NetBeansProjects/InformationRetrieval/files/documentCollection/all/OLIVE.txt txt_287.5426381584986*52548
-19 /home/smyrgeorge/NetBeansProjects/InformationRetrieval/files/documentCollection/all/Discoverers and Explorers.txt txt_327.8903812740635*8429
-20 /home/smyrgeorge/NetBeansProjects/InformationRetrieval/files/documentCollection/all/Mexico.txt txt_157.83933027967433*60944
-21 /home/smyrgeorge/NetBeansProjects/InformationRetrieval/files/documentCollection/all/Lambda Red-mediated recombinogenic engineering of.txt txt_1433.9286887755097*1330
-22 /home/smyrgeorge/NetBeansProjects/InformationRetrieval/files/documentCollection/all/By the Light of the Soul.txt txt_46.16292706187038*54639
-23 /home/smyrgeorge/NetBeansProjects/InformationRetrieval/files/documentCollection/all/Ulysses.txt txt_277.63153415547026*120051
-24 /home/smyrgeorge/NetBeansProjects/InformationRetrieval/files/documentCollection/all/The Story of an African Farm.txt txt_1359.7890363842137*36048
-25 /home/smyrgeorge/NetBeansProjects/InformationRetrieval/files/documentCollection/all/Screening for sequence-specific.txt txt_1705.9455344705254*1306
-26 /home/smyrgeorge/NetBeansProjects/InformationRetrieval/files/documentCollection/all/Seven Against Thebes.txt txt_103.16145078118099*4821
-27 /home/smyrgeorge/NetBeansProjects/InformationRetrieval/files/documentCollection/all/THE WORLD'S BEST POETRY.txt txt_61.20984509051555*40307
-28 /home/smyrgeorge/NetBeansProjects/InformationRetrieval/files/documentCollection/all/Interactions within the mammalian DNA methyltransferase family.txt txt_1055.4411304449775*1209
-29 /home/smyrgeorge/NetBeansProjects/InformationRetrieval/files/documentCollection/all/OUR DAY.txt txt_109.6642114906875*38723
+0 files/documentCollection/all/THE MIDNIGHT PASSENGER.txt txt_882.6297234467308*36962
+1 files/documentCollection/all/Screening for sequence-specific.txt txt_1803.329178062184*1306
+2 files/documentCollection/all/Monogramma.txt txt_68.3145096371881*767
+3 files/documentCollection/all/Discoverers and Explorers.txt txt_253.33015554038542*8429
+4 files/documentCollection/all/THE WORLD'S BEST POETRY.txt txt_56.60446582265222*40307
+5 files/documentCollection/all/Ulysses.txt txt_253.4012735297495*120051
+6 files/documentCollection/all/RAW GOLD.txt txt_1843.8045862514552*21624
+7 files/documentCollection/all/Lambda Red-mediated recombinogenic engineering of.txt txt_1410.558144739153*1330
+8 files/documentCollection/all/The Story of an African Farm.txt txt_984.2512414764788*36048
+9 files/documentCollection/all/THE RAVEN.txt txt_187.03601341926904*1585
+10 files/documentCollection/all/Electra.txt txt_161.5672065344004*6952
+11 files/documentCollection/all/The Daughter of a Magnate.txt txt_312.1169867676697*22169
+12 files/documentCollection/all/Seven Against Thebes.txt txt_110.15350466746064*4821
+13 files/documentCollection/all/Interactions within the mammalian DNA methyltransferase family.txt txt_1096.2523586214488*1209
+14 files/documentCollection/all/USF2.txt txt_1321.705999915313*1258
+15 files/documentCollection/all/Autumn.txt txt_185.34908407668013*24420
+16 files/documentCollection/all/THE ENGLISH NOVEL.txt txt_397.342480078695*35420
+17 files/documentCollection/all/Erwtokritos.txt txt_137.07025953378994*55112
+18 files/documentCollection/all/SLEEPING FIRES.txt txt_339.8992208394904*19256
+19 files/documentCollection/all/Mexico.txt txt_129.8706391242776*60944
+20 files/documentCollection/all/Lysistrata.txt txt_167.80158166894043*9435
+21 files/documentCollection/all/OUR DAY.txt txt_97.65908379423846*38723
+22 files/documentCollection/all/Oidypous Tyrannos.txt txt_276.40176068696417*8403
+23 files/documentCollection/all/OLIVE.txt txt_302.0818583827715*52548
+24 files/documentCollection/all/big.txt txt_1614.8636769997981*452989
+25 files/documentCollection/all/Democracy An American Novel.txt txt_641.5788216723741*25788
+26 files/documentCollection/all/By the Light of the Soul.txt txt_46.06837206768508*54639
+27 files/documentCollection/all/The Iliad of Homer.txt txt_306.90870125091067*97223
+28 files/documentCollection/all/BLUEBELL.txt txt_628.7494081141759*41885
+29 files/documentCollection/all/COCOA AND CHOCOLATE.txt txt_277.6706097978754*18909
+30 files/documentCollection/all/The house behind the cedars.txt txt_1296.8518501901585*27915
