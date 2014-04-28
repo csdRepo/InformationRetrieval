@@ -48,8 +48,9 @@ public class QueryValuate {
     
     public Map queryOKAPI (String query) throws IOException{
         TreeMap<Double, Integer> sim = new TreeMap<>();
+        Map<String,Double> map_weights=weights(query);
         for (Map.Entry<Integer, DocInfo> entry : this.docmap.entrySet()){
-            double simDqi=processOKAPI(query, entry.getValue(), entry.getKey());
+            double simDqi=processOKAPI(query, entry.getValue(), entry.getKey(), map_weights);
             if(sim.containsKey(simDqi)) simDqi = simDqi+0.00000000001;
             if(simDqi!=0.0)
                 sim.put(simDqi, entry.getKey());
@@ -57,47 +58,66 @@ public class QueryValuate {
         return sim.descendingMap();
     }
     
-    private double processOKAPI (String query, DocInfo doc, int docid) throws IOException{
+    private double processOKAPI (String query, DocInfo doc, int docid,Map<String,Double> weights_map) throws IOException{
         String delimiter = "\t\n\r\f!@#$%^&*;:'\".,0123456789()_-[]{}<>?|~`+-=/ \'\b«»§΄―—’‘–°· \\� ";
         double sum = 0;
-      weights("peos:::::::2.0 arixia.a:3.0 peoulinos:3.0");
+        double weight=0;
         StringTokenizer tok = new StringTokenizer(query, delimiter, true);
         while (tok.hasMoreTokens()){
             String token = tok.nextToken();
             token=Stemmer.Stem(token);
             if(token.length()>1 && !this.stopwords.contains(token)){
-                double IDFqi=this.IDFqi(token);
+                if(weights_map.containsKey(token)){
+                  //  System.out.println("to exw sou lew re");
+                    weight=weights_map.get(token);
+                   // System.out.println("to varos einai:"+weight);
+                }
+                else{
+                weight=1.0;
+                }
+                
+                double IDFqi=this.IDFqi(token)*weight;
                 double fqiD=this.fqiD(token, docid);
                 sum = sum +(IDFqi*((fqiD*3.0)/(fqiD+(3.0*(0.25+0.75*(doc.docLength/this.avgl))))));
             }
         }
         return sum;
     }
-    private void weights(String query)throws NumberFormatException{
-        String delimiter = "\t\n\r\f!@#$%^&*;:'\",0123456789()_-[]{}<>?|~`+-=/ \'\b«»§΄―—’‘–°· \\� ";
+    
+    private Map<String, Double> weights(String query)throws NumberFormatException{
+        String delimiter = " ";
         double sum = 0;
+       
         Map<String,Double> map_strings= new HashMap<>();
+        
         StringTokenizer tok = new StringTokenizer(query, delimiter, true);
         while (tok.hasMoreTokens()){
             String token = tok.nextToken();
-            if(query.contains(token+":")&& token.length()>1 && !this.stopwords.contains(token)){
-                System.out.println(".........."+token);
-                try{
-                 double weight =Double.parseDouble(tok.nextToken());
+            String[] parts=token.split(":");
+            for(int i=0;i<parts.length;i++){System.out.println(parts[i]);}
+            if (parts.length>2 || parts.length<2){
+               // System.out.println("ela malaka");
+               // map_strings.put(parts[0], 1.0);
+            }                
+            else{
+            try{
+                 double weight =Double.parseDouble(parts[1]);
+               //  System.out.println("--------------"+weight);
+             //    token=parts[0];
+                 map_strings.put(Stemmer.Stem(parts[0]), weight);
+                    
+                }catch(NumberFormatException e){
+                    System.out.println("error casting to double");
                 }
             }
-            token=Stemmer.Stem(token);
-            if(token.length()>1 && !this.stopwords.contains(token)){
-                map_strings.put(token, 1.0);
-            
-            }    
+    
         }
         
 
-        for(Map.Entry<String,Double> entry: map_strings.entrySet()){
-            System.out.println(entry.getKey()+" "+entry.getValue());
-        }
-        
+//        for(Map.Entry<String,Double> entry: map_strings.entrySet()){
+//            System.out.println(entry.getKey()+" "+entry.getValue());
+//        }
+        return map_strings;
     
     }
     private double IDFqi(String word){
