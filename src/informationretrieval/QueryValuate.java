@@ -70,6 +70,9 @@ public class QueryValuate {
                 if(weights_map.containsKey(token)){
                   //  System.out.println("to exw sou lew re");
                     weight=weights_map.get(token);
+                    if (weight>1.0 || weight<0){
+                        weight=1.0;
+                    }
                    // System.out.println("to varos einai:"+weight);
                 }
                 else{
