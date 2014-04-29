@@ -74,6 +74,7 @@ public class QueryValuate {
                         weight=1.0;
                     }
                    // System.out.println("to varos einai:"+weight);
+                    //dfd
                 }
                 else{
                 weight=1.0;
