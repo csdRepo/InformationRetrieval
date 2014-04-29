@@ -61,7 +61,7 @@ public class QueryValuate {
     private double processOKAPI (String query, DocInfo doc, int docid,Map<String,Double> weights_map) throws IOException{
         String delimiter = "\t\n\r\f!@#$%^&*;:'\".,0123456789()_-[]{}<>?|~`+-=/ \'\b«»§΄―—’‘–°· \\� ";
         double sum = 0;
-        double weight=0;
+        double weight;
         StringTokenizer tok = new StringTokenizer(query, delimiter, true);
         while (tok.hasMoreTokens()){
             String token = tok.nextToken();
@@ -97,7 +97,9 @@ public class QueryValuate {
         while (tok.hasMoreTokens()){
             String token = tok.nextToken();
             String[] parts=token.split(":");
-            for(int i=0;i<parts.length;i++){System.out.println(parts[i]);}
+            for (String part : parts) {
+                System.out.println(part);
+            }
             if (parts.length>2 || parts.length<2){
                // System.out.println("ela malaka");
                // map_strings.put(parts[0], 1.0);
